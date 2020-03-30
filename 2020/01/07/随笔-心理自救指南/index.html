@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="张三思">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="张三思">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="张三思的个人主页 notfresh ">
+    <meta name="description" content="序昨晚失眠了，今天早上起床晚又被骂了。心情不是很好，索性码字解闷。   内容主要是回忆一下我平时遇到困难危机，心理障碍的时候，我是怎么解决的，以及反思最近遇到的问题。 目录 做自己喜欢做的事 以毒攻毒 提防“快餐快乐” 转移注意力 降维和简化 建立心理异常处理机制  做自己喜欢做的事   比如我被骂了，我心情不好，我知道自己错了，但是我还是很烦躁。我平时喜欢做什么呢？可能喜欢的东西有个优先级，或者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="心理危机自救指南">
+<meta property="og:url" content="https://notfresh.github.io/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="张三思的个人主页">
+<meta property="og:description" content="序昨晚失眠了，今天早上起床晚又被骂了。心情不是很好，索性码字解闷。   内容主要是回忆一下我平时遇到困难危机，心理障碍的时候，我是怎么解决的，以及反思最近遇到的问题。 目录 做自己喜欢做的事 以毒攻毒 提防“快餐快乐” 转移注意力 降维和简化 建立心理异常处理机制  做自己喜欢做的事   比如我被骂了，我心情不好，我知道自己错了，但是我还是很烦躁。我平时喜欢做什么呢？可能喜欢的东西有个优先级，或者">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T12:22:13.711Z">
+<meta property="article:author" content="张三思">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>心理危机自救指南 · 张三思的个人博客</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >张三思的个人博客.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">心理危机自救指南</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>张三思的个人博客.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:30vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            心理危机自救指南
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">3.3k</span>Reading time: <span class="post-count reading-time">11 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/07</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>昨晚失眠了，今天早上起床晚又被骂了。心情不是很好，索性码字解闷。  </p>
+<p>内容主要是回忆一下我平时遇到困难危机，心理障碍的时候，我是怎么解决的，以及反思最近遇到的问题。</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li>做自己喜欢做的事</li>
+<li>以毒攻毒</li>
+<li>提防“快餐快乐”</li>
+<li>转移注意力</li>
+<li>降维和简化</li>
+<li>建立心理异常处理机制</li>
+</ul>
+<h1 id="做自己喜欢做的事"><a href="#做自己喜欢做的事" class="headerlink" title="做自己喜欢做的事"></a>做自己喜欢做的事</h1><p>   比如我被骂了，我心情不好，我知道自己错了，但是我还是很烦躁。我平时喜欢做什么呢？可能喜欢的东西有个优先级，或者有个难易排行。我先挑自己最喜欢的去做，或者挑最容易的去做，慢慢地我的心情就有所回暖。</p>
+<p>   比如，我喜欢写一些文章。我知道，这玩意根本不能和那些专业的人或者有团队的人相比，而且是我自己零碎的观点，片面和主观的观点，不一定对，我还是要写。并不是要和别人比，而是阐述自己的观点和认识。这件事就挺让人快乐的，一吐为快嘛。私密的我会写日记，可以公开，有分享价值的我就发出来。所以，写作这件事情就会让我很快乐。而且，我经常暗示和提醒自己，记录和传播自己有价值的观点就是为自己积累软实力，积累习作能力，万一哪天需要用的到呢？毕竟还有一篇论文要完成呢。所以，这个写作对于我来说，既能排解压力，又能锻炼自己，所以我会选择写下来排解自己的烦恼。  </p>
+<p>   做自己喜欢的事还能得到成就感。这是一种正向且持久的快乐，不会感觉虚度光阴。所以我觉得，当你遇到烦恼的时候，如果条件允许，你可以去做自己喜欢做的事情。当然，你要明白，自己喜欢做什么，而且这件事情应该可以被第一时间想起来。 </p>
+<h1 id="以毒攻毒"><a href="#以毒攻毒" class="headerlink" title="以毒攻毒"></a>以毒攻毒</h1><p>当你在绝望的，沮丧，烦恼的时候，你千万不要向失败低头。</p>
+<p>千万不要做负面的自我破坏的事情。</p>
+<p>否则后果就是坏事一件接一件的到来，形成蝴蝶效应，因为失败和负面的事情是有惯性的。</p>
+<p>正确的做法就是，调整心情，或者转移注意力，以正确的方法去应对挫折。</p>
+<p>比如有人失恋了就暴饮暴食，就去买东西，就去旅游，或者心情不好去打游戏。<br>明明知道一个事情不应该做，尤其是心情不好的时候，还是狠狠的做一次，总之能发泄就行。我管这种行为叫做以毒攻毒。试用场景是你心情极度难过的时候，心情跌落至谷底的时候，明知这事不正确，却依然想做。所谓理智斗不过习惯。这种行为呢，有效但是也有危害，比如钱包的损失，比如时间的浪费，比如陷入另一个麻烦等等。<br>这个方式慎用。因为副作用比较大。</p>
+<h1 id="提防“快餐快乐”"><a href="#提防“快餐快乐”" class="headerlink" title="提防“快餐快乐”"></a>提防“快餐快乐”</h1><p>   这个话题我最想说。因为我最近深受其害。<br>   我的心里有一个机制，如果自己做了明知道不该做去做了的错事，就会自责悔恨不已，跟自己过不去。有的人应该和我一样，当然我也问过身边的其他人，他们有的会原谅自己，因为存在即合理。我曾经试着想和自己和解，告诉自己原谅自己，虽然确实很大程度上宽容了自己，但是也不免自责。<br>   我想，如果从根源上解决这个问题，就要提防一种“快餐快乐”。<br>   最近，我挺焦虑的。这个寒假，我感觉我要做很多事情，尤其是准备我的简历，于是我要复习很多知识点，以及学习新的知识。学习，真的不是一件快乐的事情，真的。即便你知道它有用，就跟你知道良药苦口一样，但是你绝对不会喜欢喝药。很多复习资料是看不懂的，看不懂索性也明白了这东西不适合自己，就选择适合自己的看。<br>   但是有个很大的东西在困扰着我。那就是手机。<br>   寂寞的人看了朋友圈并不会感觉融入集体，反而会觉得更加寂寞。无聊的人看了会更加无聊。<br>   还有一个东西，抖音，刷着刷着就感觉非常让人反感，赶紧关掉。<br>   还有一个东西，B站搞笑视频。看着看着就让人特别烦躁，还忍不住向人推荐，可能的结果是会让人觉得我这个人非常低趣味。<br>   我深受B站沙雕视频和朋友圈危害。我知道我的的确确浪费了时间，而且毫无营养。其实我的初衷是被无聊的学习憋死了，赶紧浮上水面换个气，但是因为脑子里的可选项习惯性的只有这两个，我就没得选择了。<br>   为什么呢？我觉得是因为手机太方便了。只要轻轻一按，上次锁屏的界面就打开了。诶，还是B站，微信，朋友圈，咱再刷刷如何？浏览器的历史记录把b这个字母一输入，就自动联想了b站，要不再习惯性的刷刷？<br>   然后就陷入了死循环。<br>   我去年考研的时候，干脆就不拿手机。虽然现在没有这个必要了，但是收到这个办法的启示。我觉得解决步骤如下：（1）把手机放到不能随手可及的地方，把手机设置成静音模式，把B站历史记录经常清空（2）经常暗示自己不要无意识的刷朋友圈并且告诉自己这种行为有害。以上两种方法，我觉得刚开始会很难，但是只要勤加刻意练习，过一阵子应该能很好地解决爱摸手机的问题。<br>   当然，还有一个关键，就是要培养正向的排解压力和枯燥的方法。比如培养积极正向的兴趣爱好，比如阅读别人的博客，阅读有深度文章，阅读一些杂志，阅读一些好的书籍，也可以看看美食节目。还有我之前说过，是要提高的目标和使命感，经常构想和在脑海中描绘自己的目标实现后的样子，从而提高自己的动力和忍耐力。<br>   快餐式的快乐贻害无穷，如果深陷其中无法自拔，那么就危险了。相比之下，还是自律带来的自由更让人更加长久的真正的快乐。</p>
+<h1 id="转移注意力"><a href="#转移注意力" class="headerlink" title="转移注意力"></a>转移注意力</h1><p>   昨天晚上我失眠之后，我尝试了几种方法。我首先听了《聊斋》的说书，我又看了看阮一峰的博客网站，我还看了一些B站的沙雕视频，我还听了几首轻音乐，可是静下来大脑里还是嗡嗡的作响，大脑越来越精神，关于当天的事浮想联翩，我瞅着透过窗帘的一丝亮光，感觉这些方法并不能缓解我的问题。<br>   如果是平常，我应该会下床起来写东西或者做点别的。因为在家里要表现出作息规律的样子，让父母放心。其实起床也不失为一种好的方法，白天多睡会补回来就好了。<br>   如果是平常白天，我觉得有一个好的方法可以转移注意力：做一些无关紧要但是以后必须做的简单的事情。<br>   我喜欢整理东西。这个习惯是从一位朋友那里学来的。他喜欢整理衣柜，打扫卫生。我后来试了一次，发现我如果把房间，书桌，电脑文件夹，收藏夹，花呗账单，淘宝评价，衣柜等等整理一遍，我就会特别开心，甚至把垃圾倒了，也觉得是一种放松的方式。这种整理癖确实能让人心情愉悦。<br>   所以，转移注意力，还挺讲究的。选择合适的行为，能让自己愉快起来，暂时忘掉烦恼就好，等冷静下来再去思考该做的正确事情应该怎么做。<br>   以上是我的方式，我总结一下，还是跟上面的几个观点分不开。也就是，维护一个喜欢做的事情列表，让自己心情不好的时候有正确的事情可以选择。</p>
+<h1 id="降维和简化、量化"><a href="#降维和简化、量化" class="headerlink" title="降维和简化、量化"></a>降维和简化、量化</h1><p>   我知道每个人都有或多或少的困难症。可是这个学期，我明白了一定要尽早规划和准备。但是很多事情真的很讨厌，心里真的很抗拒，怎么办呢?  我尝试过好一些办法来解决这个问题。后面我想到几个方法，也即是本节的标题，降维，简化，量化。<br>   举个例子，比如有健身的时候，一组动作坚持不下去了，量还没有做够，怎么办呢？可以做一些简化版的降维的动作，又好比当你唱歌唱不上去的时候，降一个调唱过去。比如我很讨厌刷算法，我就告诉自己，我直接抄答案，把这个题目背过，或者看别的解答，自己不做也是可以的。比如必须做一件事情，但是这事其实不怎么想做，那么我就把这个事分成几个步骤，并且降低完成的质量，每次做一个阶段，多做几次，只要能完成就好。<br>   再举几个搞笑的例子，比如我很讨厌洗鞋子，我会这么做，我把洗鞋子分成几个步骤：（1）拆鞋带（2）刷鞋底（3）刷鞋帮。我告诉自己，我刷100下鞋帮就可以了，左右来回刷100下，先试试，刷完不管刷没刷干净，我都不洗了。其实等我刷了100下之后，我觉得应该把鞋子洗干净，不如再刷一刷。以此种方法，鞋子就被我刷干净了。<br>   比如我不想起床，我告诉自己，我要在20分钟内起床，穿衣穿鞋，洗脸刷牙。那我就有20分钟的紧迫感，于是我就不自觉的加快速度，争取在20分钟内完成任务。<br>   以上几种方法看上去很搞笑，但是我确实凭着它们解决了我的拖延症，虽然未必严格贯彻，但是已经很大程度缓解了我的毛病，我觉得值得一说。<br>   如果我没有记错的话，曾经有个日本的马拉松冠军说，他会把全程分成几个阶段，每次的目标就是跑完一段，累计起来，就完成了全程，而且也不会觉得遥遥无期。<br>   还有一个事，比如我写公众号文章这件事。我知道如果要写好一篇文章，如果要达到自己满意的地步，就要花很长时间去写。但是如果话很长时间去写，当下又特别忙，那么要不要写呢？不写，可能以后也不会写，不如质量上放一点水，不改错别字，少费一点精力，只要完成了就好。只要把大致意思表达出来了，如果100分是满分，一个不重要的事情，做个80分，70分也可以接受。反正要追求时间和性价比，最关键的是，把这件事情做了总比没做强。</p>
+<h1 id="建立心理异常处理机制"><a href="#建立心理异常处理机制" class="headerlink" title="建立心理异常处理机制"></a>建立心理异常处理机制</h1><p>   如果知道自己时不时又心里烦躁，不如培养一个机制去疏导自己的情绪，遇到危机的时候可以抗住。这种思维就是建立一种危机应对的长效应对机制。<br>   最好培养一种习惯，一种不用动脑的潜意识反映，当你发现自己情绪不佳，状态不佳，感情障碍的时候，能够直接启动应急机制，那么就可以经常控制自己的情绪，保证心态稳定。<br>   用计算机专业的操作系统知识俩说，就是建立异常处理机制。遇到问题，按部就班的处理，以此逻辑，自然可以保证人的情绪可控，生活节奏正常健康。</p>
+<h1 id="后序"><a href="#后序" class="headerlink" title="后序"></a>后序</h1><p>   把自己零碎的想法整理出来，也不是一件容易的事情，花费了好久时间，从早上9点半写到现在，除去中间的时间，大约花了2个小时吧，估计您看完5分钟不到，创作不易哈哈哈。也许我总结的有问题，但是以上，就是我平时应对危机的一些办法，虽然朴素，却对我却是真真实实的有用。<br>   欢迎评论和交流。</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://notfresh.github.io">张三思</a>
+            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/">https://notfresh.github.io/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/</a> -->
+            <p>发表日期：<a href="https://notfresh.github.io/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/">January 7th 2020, 12:00:00 am</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/">March 30th 2020, 8:22:13 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/01/07/%E5%A5%BD%E7%8E%A9-%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91API%20python3%20demo/" title= "百度 API python3 Demo">
+                    <div class="nextTitle">百度 API python3 Demo</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/07/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-pytest%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" title= "测试框架Pytest的使用">
+                    <div class="prevTitle">测试框架Pytest的使用</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "p8rskNDpugkOJgrUg6gyCeue-gzGzoHsz",
+        appKey: "tRshEJ6QPFCgboyqVTeORgJ7",
+        placeholder: "请提出有意义和善意的评论，谢绝灌水和恶意",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:notfresh@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/notfresh" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+
+
+
+    <!-- 不蒜子  -->
+    <!-- 
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        
+    </div>
+    
+     -->
+
+
+
+
+
+    
+
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:30vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序"><span class="toc-number">1.</span> <span class="toc-text">序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#目录"><span class="toc-number">2.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#做自己喜欢做的事"><span class="toc-number">3.</span> <span class="toc-text">做自己喜欢做的事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以毒攻毒"><span class="toc-number">4.</span> <span class="toc-text">以毒攻毒</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#提防“快餐快乐”"><span class="toc-number">5.</span> <span class="toc-text">提防“快餐快乐”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#转移注意力"><span class="toc-number">6.</span> <span class="toc-text">转移注意力</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#降维和简化、量化"><span class="toc-number">7.</span> <span class="toc-text">降维和简化、量化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#建立心理异常处理机制"><span class="toc-number">8.</span> <span class="toc-text">建立心理异常处理机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后序"><span class="toc-number">9.</span> <span class="toc-text">后序</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 34
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E5%86%99%E4%BD%9C-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%9D%E6%88%91%E8%87%AA%E5%B7%B1%E5%86%99%E4%BD%9C/" >写作的原因</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E9%9A%8F%E7%AC%94-%E6%88%91%E7%9A%84%E8%A7%A3%E8%AF%BB---%E5%BC%A0%E4%B8%80%E9%B8%A3%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" >一篇张一鸣文章的解读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-docker/" >docker使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%9A%8F%E7%AC%94-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%85%A5%E4%BE%B5%E6%80%A7%E8%A7%A3%E9%87%8A/" >框架的入侵性解释</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-the-art-of-command-line%20%E8%A7%A3%E8%AF%BB/" >命令行使用技巧-the art of command line</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E5%86%99%E4%BD%9C-markdown%E7%9A%84%E7%94%A8%E6%B3%95/" >Markdown 的用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E8%BF%B7%E6%83%91%E8%BE%A8%E6%9E%90/" >置换算法辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB-%E5%8D%9A%E4%B8%BB%E6%8E%A8%E8%8D%90/" >博主推荐</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/" >vagrant使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-MacOS%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/" >MacOS使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E6%A0%88%E5%9C%A8%E6%B1%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-%E4%B8%AD%E7%BC%80%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E5%BC%8F-python%E5%AE%9E%E7%8E%B0/" >利用栈实现中缀式转后缀式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-vim%E7%9A%84%E4%BD%BF%E7%94%A8/" >Vim的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E5%92%8C%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/" >项目经理和产品经理的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" >心理危机自救指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-pytest%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" >测试框架Pytest的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E5%A5%BD%E7%8E%A9-%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91API%20python3%20demo/" >百度 API python3 Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E6%88%91%E7%9A%84linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" >我的Linux学习之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E7%88%AC%E5%9D%91%E6%8A%80%E5%B7%A7/" >Linux常技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/%E9%9A%8F%E7%AC%94-%E5%AE%9E%E9%AA%8C%E6%A5%BC%E6%8A%A5%E7%8F%AD%E5%AD%A6%E4%B9%A0%E6%84%9F%E8%A7%A6/" >实验楼报班学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B7%A6%E8%BF%9E%E6%8E%A5,%E5%8F%B3%E8%BF%9E%E6%8E%A5,%E5%86%85%E8%BF%9E%E6%8E%A5,%E5%A4%96%E8%BF%9E%E6%8E%A5,%20join,%20left%20join,%20right%20join%20,mysql%20,oracle/" >左连接,右连接,内外连接的辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF%20%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%20%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6/" >一个链表中环的检测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E9%9A%8F%E7%AC%94-%E6%B1%82%E8%81%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%8D%E6%80%9D%E5%92%8C%E6%80%9D%E8%B7%AF/" >求职的一些反思和思路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%AD%90%E9%97%AE%E9%A2%98,%20%E5%A6%82%E4%BD%95%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E6%9F%90%E4%B8%AA%E5%80%BC%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE/" >快速排序子问题-单次排序定位元素</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href= "/2020/01/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-Python%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E4%B9%8B%E7%A9%BA%E6%A0%BC/" >Python编程规范之空格的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/" >SQLAlchemy教程-第一章-基础模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%85%B6%E4%BB%96-%E5%AE%8C%E7%BB%93/" >SQLAlchemy教程-第五章-完结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-mysql%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" >mysql启动失败的一个解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%88%AC%E8%99%AB-scrapy/" >scrapy 入门学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95/" >SQLAlchemy教程-第二章-ORM入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%8A%8A%E5%8C%85%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8C%E6%AD%A5%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" >PLSQL中的package迁移脚本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-git%20%E5%B0%8F%E6%A1%88%E4%BE%8B/" >Git 小案例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-%E6%88%91%E6%98%AF%E6%80%8E%E4%B9%88%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0Python%E7%9A%84/" >我的Python学习经历</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%89%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B6/" >SQLAlchemy教程-第三章-ORM进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B62/" >SQLAlchemy教程-第四章-ORM进阶2</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQLAlachemy"><span class="iconfont-archer">&#xe606;</span>SQLAlachemy</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="scrapy"><span class="iconfont-archer">&#xe606;</span>scrapy</span>
+    
+        <span class="sidebar-tag-name" data-tags="付费学习"><span class="iconfont-archer">&#xe606;</span>付费学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络日志"><span class="iconfont-archer">&#xe606;</span>网络日志</span>
+    
+        <span class="sidebar-tag-name" data-tags="程序人生"><span class="iconfont-archer">&#xe606;</span>程序人生</span>
+    
+        <span class="sidebar-tag-name" data-tags="写作"><span class="iconfont-archer">&#xe606;</span>写作</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程语言"><span class="iconfont-archer">&#xe606;</span>编程语言</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="随笔-心情"><span class="iconfont-archer">&#xe60a;</span>随笔-心情</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "张三思"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

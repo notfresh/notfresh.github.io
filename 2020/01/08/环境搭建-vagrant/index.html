@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="张三思">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="张三思">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="张三思的个人主页 notfresh ">
+    <meta name="description" content="vagrant和virtualbox介绍搭建环境的过程vagrant是一款虚拟机管理工具，使用它可以快速搭建可复用、可移植的开发环境。使用一个命令，vagrant就可以完成以下所有事情:  在电脑上快速创建一台虚拟机 改变虚拟机的物理配置 建立网络连接，使得你可以访问在你电脑上运行的虚拟机或局域网下的其他虚拟机 共享目录，你在电脑上对文件的修改可以同步到虚拟机 启动虚拟机 设置虚拟机主机名使得该虚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vagrant使用技巧">
+<meta property="og:url" content="https://notfresh.github.io/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/index.html">
+<meta property="og:site_name" content="张三思的个人主页">
+<meta property="og:description" content="vagrant和virtualbox介绍搭建环境的过程vagrant是一款虚拟机管理工具，使用它可以快速搭建可复用、可移植的开发环境。使用一个命令，vagrant就可以完成以下所有事情:  在电脑上快速创建一台虚拟机 改变虚拟机的物理配置 建立网络连接，使得你可以访问在你电脑上运行的虚拟机或局域网下的其他虚拟机 共享目录，你在电脑上对文件的修改可以同步到虚拟机 启动虚拟机 设置虚拟机主机名使得该虚">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T12:21:52.782Z">
+<meta property="article:author" content="张三思">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>vagrant使用技巧 · 张三思的个人博客</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >张三思的个人博客.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">vagrant使用技巧</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>张三思的个人博客.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:30vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            vagrant使用技巧
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">1.1k</span>Reading time: <span class="post-count reading-time">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/08</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="vagrant和virtualbox介绍"><a href="#vagrant和virtualbox介绍" class="headerlink" title="vagrant和virtualbox介绍"></a>vagrant和virtualbox介绍</h1><h2 id="搭建环境的过程"><a href="#搭建环境的过程" class="headerlink" title="搭建环境的过程"></a>搭建环境的过程</h2><p>vagrant是一款虚拟机管理工具，使用它可以快速搭建可复用、可移植的开发环境。<br>使用一个命令，vagrant就可以完成以下所有事情:</p>
+<ul>
+<li>在电脑上快速创建一台虚拟机</li>
+<li>改变虚拟机的物理配置</li>
+<li>建立网络连接，使得你可以访问在你电脑上运行的虚拟机或局域网下的其他虚拟机</li>
+<li>共享目录，你在电脑上对文件的修改可以同步到虚拟机</li>
+<li>启动虚拟机</li>
+<li>设置虚拟机主机名使得该虚拟机下的软件能够正确的设置</li>
+<li>使用shell script或配置管理工具(例如：chef、puppet)来配置软件安装</li>
+<li>调整主机和客户机的工作方式来解决可能出现的问题，例如：VirtualBox的默认网络配置在Ubuntu 12.04 LTS下是无效的，因此vagrant调整了Ubuntu的配置使得VirtualBox网络能够正常使用，vagrant解决了很多类似这种主机和客户机组合常见的问题。</li>
+</ul>
+<p>使用vagrant搭建好一个配置好的开发环境在大约在一分钟内就能完成，耗时多少取决于你要安装的软件数量。<br>一旦vagrant完成了虚拟机的创建，你将拥有一个配置好的开发环境，因为已经默认创建好了共享目录和网络连接，当你测试你的web应用的时候，代码实际是运行在虚拟机里。<br>vagrant提供了完善的管理虚拟机的命令，除了创建开发环境，vagrant还可以实现以下所有事情：</p>
+<ul>
+<li>使用ssh连接到虚拟机</li>
+<li>关闭虚拟机</li>
+<li>彻底删除虚拟机</li>
+<li>暂停或恢复虚拟机</li>
+<li>打包虚拟机镜像</li>
+</ul>
+<p>vagrant搭建开发环境就像瑞士军刀一样犀利，它帮你解决了创建和管理开发环境的所有工作，并且开发环境更接近于生产环境。</p>
+<h2 id="管理多个机器"><a href="#管理多个机器" class="headerlink" title="管理多个机器"></a>管理多个机器</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- mode: ruby -*-</span></span><br><span class="line"><span class="comment"># vi: set ft=ruby :</span></span><br><span class="line"></span><br><span class="line">BOX_IMAGE = <span class="string">"./hadoop_master.box"</span></span><br><span class="line">NODE_COUNT = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> <span class="params">|config|</span></span><br><span class="line"></span><br><span class="line">  config.vm.define <span class="string">"hadoop-master"</span> <span class="keyword">do</span> <span class="params">|subconfig|</span></span><br><span class="line"></span><br><span class="line">    subconfig.vm.box = BOX_IMAGE <span class="comment"># use the same IMAGE with the slaves</span></span><br><span class="line">    subconfig.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.33.10"</span></span><br><span class="line">    subconfig.vm.hostname = <span class="string">"hadoop-master"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  (<span class="number">1</span>..NODE_COUNT).each <span class="keyword">do</span> <span class="params">|i|</span></span><br><span class="line"></span><br><span class="line">    config.vm.define <span class="string">"hadoop-slave<span class="subst">#&#123;i&#125;</span>"</span> <span class="keyword">do</span> <span class="params">|subconfig|</span></span><br><span class="line">      subconfig.vm.box = BOX_IMAGE</span><br><span class="line">      subconfig.vm.network <span class="string">"private_network"</span>, <span class="symbol">ip:</span> <span class="string">"192.168.33.<span class="subst">#&#123;i+<span class="number">10</span>&#125;</span>"</span></span><br><span class="line">      subconfig.vm.hostname = <span class="string">"hadoop-slave<span class="subst">#&#123;i&#125;</span>"</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="vagrant-ssh"><a href="#vagrant-ssh" class="headerlink" title="vagrant ssh"></a>vagrant ssh</h1><p>如果是官方的box，那么用户名和密码默认都是vagrant</p>
+<h1 id="vagrant命令详解"><a href="#vagrant命令详解" class="headerlink" title="vagrant命令详解"></a>vagrant命令详解</h1><p>命令    作用<br>vagrant box add　　    　　添加box的操作　　<br>vagrant init     　　初始化box的操作，会生成vagrant的配置文件Vagrantfile　　<br>vagrant up    启动本地环境<br>vagrant ssh    通过 ssh 登录本地环境所在虚拟机<br>vagrant halt    关闭本地环境<br>vagrant suspend    暂停本地环境<br>vagrant resume    恢复本地环境<br>vagrant reload    修改了 Vagrantfile 后，使之生效（相当于先 halt，再 up）<br>vagrant destroy    彻底移除本地环境<br>vagrant box list    显示当前已经添加的box列表<br>vagrant box remove    删除相应的box<br>vagrant package    打包命令，可以把当前的运行的虚拟机环境进行打包<br>vagrant plugin    用于安装卸载插件<br>vagrant status    获取当前虚拟机的状态<br>vagrant global-status    显示当前用户Vagrant的所有环境状态</p>
+<h1 id="关闭实例"><a href="#关闭实例" class="headerlink" title="关闭实例"></a>关闭实例</h1><p>关闭实例可以使用三种方式vagrant suspending, vagrant halt, vagrant destroy。</p>
+<ul>
+<li><p>suspending，暂停虚拟机，保存虚拟机当前的状态（内存和磁盘均不释放），可以使用vagrant up命令恢复运行；</p>
+</li>
+<li><p>halt，关机，虚拟机停止运行，但是虚拟机实例保留，不销毁，可以理解为是正常的关机；</p>
+</li>
+<li><p>destroy，销毁虚拟机，虚拟机的实例被销毁;</p>
+</li>
+</ul>
+<h1 id="增加box"><a href="#增加box" class="headerlink" title="增加box"></a>增加box</h1><p>vagrant box add nachosEnv  ~/Documents/上课有关/操作系统/xenial-server-cloudimg-i386-vagrant.box</p>
+<h1 id="导出box"><a href="#导出box" class="headerlink" title="导出box"></a>导出box</h1><p>vagrant package –output NAME.box</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.cnblogs.com/mr-amazing/p/9606222.html" target="_blank" rel="noopener">https://www.cnblogs.com/mr-amazing/p/9606222.html</a><br><a href="https://www.cnblogs.com/wangkongming/p/4070782.html" target="_blank" rel="noopener">https://www.cnblogs.com/wangkongming/p/4070782.html</a><br><a href="https://blog.csdn.net/zc474235918/article/details/51039150" target="_blank" rel="noopener">https://blog.csdn.net/zc474235918/article/details/51039150</a><br><a href="https://homes.cs.washington.edu/~tom/nachos/" target="_blank" rel="noopener">https://homes.cs.washington.edu/~tom/nachos/</a><br><a href="http://www.vagrantbox.es/" target="_blank" rel="noopener">http://www.vagrantbox.es/</a></p>
+<ul>
+<li><p>Vagrant入门<br><a href="https://www.cnblogs.com/alexyang8/p/3380936.html" target="_blank" rel="noopener">https://www.cnblogs.com/alexyang8/p/3380936.html</a></p>
+</li>
+<li><p>vagrant初识（一）<br><a href="https://www.cnblogs.com/slang/p/9919400.html" target="_blank" rel="noopener">https://www.cnblogs.com/slang/p/9919400.html</a></p>
+</li>
+<li><p>vagrant 14.04 32位下载地址<br><a href="https://c4ys.com/archives/1230" target="_blank" rel="noopener">https://c4ys.com/archives/1230</a><br><a href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/vagrant/trusty/current/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-cloud-images/vagrant/trusty/current/</a><br><a href="https://blog.csdn.net/weixin_30367169/article/details/94909666" target="_blank" rel="noopener">https://blog.csdn.net/weixin_30367169/article/details/94909666</a></p>
+</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://notfresh.github.io">张三思</a>
+            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/">https://notfresh.github.io/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/</a> -->
+            <p>发表日期：<a href="https://notfresh.github.io/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/">January 8th 2020, 12:00:00 am</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/">March 30th 2020, 8:21:52 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/01/08/Linux-MacOS%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/" title= "MacOS使用技巧">
+                    <div class="nextTitle">MacOS使用技巧</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/01/08/%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB-%E5%8D%9A%E4%B8%BB%E6%8E%A8%E8%8D%90/" title= "博主推荐">
+                    <div class="prevTitle">博主推荐</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "p8rskNDpugkOJgrUg6gyCeue-gzGzoHsz",
+        appKey: "tRshEJ6QPFCgboyqVTeORgJ7",
+        placeholder: "请提出有意义和善意的评论，谢绝灌水和恶意",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:notfresh@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/notfresh" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+
+
+
+    <!-- 不蒜子  -->
+    <!-- 
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        
+    </div>
+    
+     -->
+
+
+
+
+
+    
+
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:30vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#vagrant和virtualbox介绍"><span class="toc-number">1.</span> <span class="toc-text">vagrant和virtualbox介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建环境的过程"><span class="toc-number">1.1.</span> <span class="toc-text">搭建环境的过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理多个机器"><span class="toc-number">1.2.</span> <span class="toc-text">管理多个机器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vagrant-ssh"><span class="toc-number">2.</span> <span class="toc-text">vagrant ssh</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vagrant命令详解"><span class="toc-number">3.</span> <span class="toc-text">vagrant命令详解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关闭实例"><span class="toc-number">4.</span> <span class="toc-text">关闭实例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#增加box"><span class="toc-number">5.</span> <span class="toc-text">增加box</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#导出box"><span class="toc-number">6.</span> <span class="toc-text">导出box</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-number">7.</span> <span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 34
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E5%86%99%E4%BD%9C-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%9D%E6%88%91%E8%87%AA%E5%B7%B1%E5%86%99%E4%BD%9C/" >写作的原因</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E9%9A%8F%E7%AC%94-%E6%88%91%E7%9A%84%E8%A7%A3%E8%AF%BB---%E5%BC%A0%E4%B8%80%E9%B8%A3%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" >一篇张一鸣文章的解读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-docker/" >docker使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%9A%8F%E7%AC%94-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%85%A5%E4%BE%B5%E6%80%A7%E8%A7%A3%E9%87%8A/" >框架的入侵性解释</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-the-art-of-command-line%20%E8%A7%A3%E8%AF%BB/" >命令行使用技巧-the art of command line</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E5%86%99%E4%BD%9C-markdown%E7%9A%84%E7%94%A8%E6%B3%95/" >Markdown 的用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E8%BF%B7%E6%83%91%E8%BE%A8%E6%9E%90/" >置换算法辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB-%E5%8D%9A%E4%B8%BB%E6%8E%A8%E8%8D%90/" >博主推荐</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/" >vagrant使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-MacOS%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/" >MacOS使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E6%A0%88%E5%9C%A8%E6%B1%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-%E4%B8%AD%E7%BC%80%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E5%BC%8F-python%E5%AE%9E%E7%8E%B0/" >利用栈实现中缀式转后缀式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-vim%E7%9A%84%E4%BD%BF%E7%94%A8/" >Vim的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E5%92%8C%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/" >项目经理和产品经理的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" >心理危机自救指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-pytest%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" >测试框架Pytest的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E5%A5%BD%E7%8E%A9-%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91API%20python3%20demo/" >百度 API python3 Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E6%88%91%E7%9A%84linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" >我的Linux学习之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E7%88%AC%E5%9D%91%E6%8A%80%E5%B7%A7/" >Linux常技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/%E9%9A%8F%E7%AC%94-%E5%AE%9E%E9%AA%8C%E6%A5%BC%E6%8A%A5%E7%8F%AD%E5%AD%A6%E4%B9%A0%E6%84%9F%E8%A7%A6/" >实验楼报班学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B7%A6%E8%BF%9E%E6%8E%A5,%E5%8F%B3%E8%BF%9E%E6%8E%A5,%E5%86%85%E8%BF%9E%E6%8E%A5,%E5%A4%96%E8%BF%9E%E6%8E%A5,%20join,%20left%20join,%20right%20join%20,mysql%20,oracle/" >左连接,右连接,内外连接的辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF%20%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%20%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6/" >一个链表中环的检测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E9%9A%8F%E7%AC%94-%E6%B1%82%E8%81%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%8D%E6%80%9D%E5%92%8C%E6%80%9D%E8%B7%AF/" >求职的一些反思和思路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%AD%90%E9%97%AE%E9%A2%98,%20%E5%A6%82%E4%BD%95%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E6%9F%90%E4%B8%AA%E5%80%BC%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE/" >快速排序子问题-单次排序定位元素</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href= "/2020/01/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-Python%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E4%B9%8B%E7%A9%BA%E6%A0%BC/" >Python编程规范之空格的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/" >SQLAlchemy教程-第一章-基础模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%85%B6%E4%BB%96-%E5%AE%8C%E7%BB%93/" >SQLAlchemy教程-第五章-完结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-mysql%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" >mysql启动失败的一个解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%88%AC%E8%99%AB-scrapy/" >scrapy 入门学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95/" >SQLAlchemy教程-第二章-ORM入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%8A%8A%E5%8C%85%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8C%E6%AD%A5%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" >PLSQL中的package迁移脚本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-git%20%E5%B0%8F%E6%A1%88%E4%BE%8B/" >Git 小案例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-%E6%88%91%E6%98%AF%E6%80%8E%E4%B9%88%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0Python%E7%9A%84/" >我的Python学习经历</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%89%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B6/" >SQLAlchemy教程-第三章-ORM进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B62/" >SQLAlchemy教程-第四章-ORM进阶2</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQLAlachemy"><span class="iconfont-archer">&#xe606;</span>SQLAlachemy</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="scrapy"><span class="iconfont-archer">&#xe606;</span>scrapy</span>
+    
+        <span class="sidebar-tag-name" data-tags="付费学习"><span class="iconfont-archer">&#xe606;</span>付费学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络日志"><span class="iconfont-archer">&#xe606;</span>网络日志</span>
+    
+        <span class="sidebar-tag-name" data-tags="程序人生"><span class="iconfont-archer">&#xe606;</span>程序人生</span>
+    
+        <span class="sidebar-tag-name" data-tags="写作"><span class="iconfont-archer">&#xe606;</span>写作</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程语言"><span class="iconfont-archer">&#xe606;</span>编程语言</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="随笔-心情"><span class="iconfont-archer">&#xe60a;</span>随笔-心情</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "张三思"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

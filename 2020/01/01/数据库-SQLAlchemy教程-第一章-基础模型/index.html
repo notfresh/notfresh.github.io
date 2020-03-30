@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="张三思">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="张三思">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="张三思的个人主页 notfresh ">
+    <meta name="description" content="SQLAlchemy教程-第一章-基础模型 本文章属于博主原创，请随意转载，但是请注明来源。 版权声明：自由转载-保持署名（创意共享3.0许可证)  动机最近在python web开发, 用了flask, 就不能不用sqlalchemy. 虽然本人写了很久的oracle语句, 开发了很久的plsql, 但是呢, 切换到编程语言里, 自由自在的使用 ORM(什么是ORM? 就是 object rel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQLAlchemy教程-第一章-基础模型">
+<meta property="og:url" content="https://notfresh.github.io/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="张三思的个人主页">
+<meta property="og:description" content="SQLAlchemy教程-第一章-基础模型 本文章属于博主原创，请随意转载，但是请注明来源。 版权声明：自由转载-保持署名（创意共享3.0许可证)  动机最近在python web开发, 用了flask, 就不能不用sqlalchemy. 虽然本人写了很久的oracle语句, 开发了很久的plsql, 但是呢, 切换到编程语言里, 自由自在的使用 ORM(什么是ORM? 就是 object rel">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-03-30T12:09:17.894Z">
+<meta property="article:author" content="张三思">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="SQLAlachemy">
+<meta property="article:tag" content="数据库">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>SQLAlchemy教程-第一章-基础模型 · 张三思的个人博客</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >张三思的个人博客.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">SQLAlchemy教程-第一章-基础模型</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>张三思的个人博客.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:30vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            SQLAlchemy教程-第一章-基础模型
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Python">Python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "SQLAlachemy">SQLAlachemy</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "数据库">数据库</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/01/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="SQLAlchemy教程-第一章-基础模型"><a href="#SQLAlchemy教程-第一章-基础模型" class="headerlink" title="SQLAlchemy教程-第一章-基础模型"></a><a href="https://www.cnblogs.com/notfresh/p/9246542.html" target="_blank" rel="noopener">SQLAlchemy教程-第一章-基础模型</a></h1><blockquote>
+<p>本文章属于博主原创，请随意转载，但是请注明来源。</p>
+<p>版权声明：自由转载-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="noopener">创意共享3.0许可证</a>)</p>
+</blockquote>
+<h1 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h1><p>最近在python web开发, 用了flask, 就不能不用sqlalchemy. 虽然本人写了很久的oracle语句, 开发了很久的plsql, 但是呢, 切换到编程语言里, 自由自在的使用 ORM(什么是ORM? 就是 object relationship mapping, 通俗的解释就是, 使用面向对象的编程语言去实现类似于 sql语句的功能), 还是需要一个过程的, 这个过程不太顺畅. 自己走过了的坑, 当然不希望后面的童鞋再走一遍. 想写一个教程, 供大家学习参考.</p>
+<h1 id="困难"><a href="#困难" class="headerlink" title="困难"></a>困难</h1><p>写教程最大的困难时啥呢？<br>大家都知道, 你会, 但你不一定能很好的表达出来并且传授给别人. 所以, 写教程是一个很痛苦的事情. 远远没有想象的那么简单. 本着想为世界做一份力的初衷, 我决定再给自己一次机会, 使用半个月, 把自己会的sqlalchemy技巧写出来. 每次写一点点, 不求大而全, 只准守一个原则, 够用就好. 够用, 而且你能记得住.<br>何必要贪多求全呢?<br>我不久前还在犯这种错误, 恨不得把一个东西吃烂嚼透, 但是发现这是一个非常痛苦的过程. 英文的教程看着看着就睡着了. 读起来非常痛苦, 因为我的英语水平也不是很好. 学的多, 忘得也多. 够用就好, 反正知识在那里, 想学再去就完了.</p>
+<h1 id="对自己的希望"><a href="#对自己的希望" class="headerlink" title="对自己的希望"></a>对自己的希望</h1><p>写教程这个事, 有拖延症是完不成的. 目标定的太大也不合适, 因为会产生恐惧心理而排斥. 所以, 定一个小目标, 把目前自己会的输出即可, 平时在工作中用了哪些, 写出来就完了.<br>希望自己在半个月内, 能尽可能完成这件事, 虽然我知道这是个很有挑战的工作.</p>
+<p>今天2018-06-29, 先构建好模型.</p>
+<h1 id="创建数据表"><a href="#创建数据表" class="headerlink" title="创建数据表"></a>创建数据表</h1><p>我们采用先建好数据库和表的方式. 需要先有一个可用的 mysql数据库. 可以自己安装一个mysql数据库.<br>数据模型, 我依然采用oracle数据自带的实例 员工和部门表.</p>
+<p>SQL语句, 我已经根据mysql的语法改造好了, 直接可以运行.<br>这个教程所有的源码都在github上面. 仓库地址是: <a href="https://github.com/notfresh/sqlalchemy_demo" target="_blank" rel="noopener">https://github.com/notfresh/sqlalchemy_demo</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">-- 部门 表</span><br><span class="line">-- Create table</span><br><span class="line">create table DEPT</span><br><span class="line">(</span><br><span class="line">deptno int(2) not null,</span><br><span class="line">dname varchar(14),</span><br><span class="line">loc varchar(13)</span><br><span class="line">)</span><br><span class="line">;</span><br><span class="line">-- Create&#x2F;Recreate primary, unique and foreign key constraints</span><br><span class="line">alter table DEPT</span><br><span class="line">add constraint PK_DEPT primary key (DEPTNO);</span><br><span class="line"></span><br><span class="line">insert into dept (DEPTNO, DNAME, LOC)</span><br><span class="line">values (10, &#39;ACCOUNTING&#39;, &#39;NEW YORK&#39;);</span><br><span class="line"></span><br><span class="line">insert into dept (DEPTNO, DNAME, LOC)</span><br><span class="line">values (20, &#39;RESEARCH&#39;, &#39;DALLAS&#39;);</span><br><span class="line"></span><br><span class="line">insert into dept (DEPTNO, DNAME, LOC)</span><br><span class="line">values (30, &#39;SALES&#39;, &#39;CHICAGO&#39;);</span><br><span class="line"></span><br><span class="line">insert into dept (DEPTNO, DNAME, LOC)</span><br><span class="line">values (40, &#39;OPERATIONS&#39;, &#39;BOSTON&#39;);</span><br><span class="line"></span><br><span class="line">-- 员工表</span><br><span class="line">create table EMP</span><br><span class="line">(</span><br><span class="line">empno int(4) not null,</span><br><span class="line">ename varchar(10),</span><br><span class="line">job varchar(9),</span><br><span class="line">mgr int(4),</span><br><span class="line">hiredate DATE,</span><br><span class="line">sal DECIMAL(7,2),</span><br><span class="line">comm DECIMAL(7,2),</span><br><span class="line">deptno int(2),</span><br><span class="line">desc2 varchar(30) default 2</span><br><span class="line">)</span><br><span class="line">;</span><br><span class="line">-- Create&#x2F;Recreate primary, unique and foreign key constraints</span><br><span class="line">alter table EMP</span><br><span class="line">add constraint PK_EMP primary key (EMPNO);</span><br><span class="line">alter table EMP</span><br><span class="line">add constraint FK_DEPTNO foreign key (DEPTNO)</span><br><span class="line">references DEPT (DEPTNO);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7369, &#39;SMITH&#39;, &#39;CLERK&#39;, 7902, str_to_date(&#39;17-12-1980&#39;, &#39;%d-%m-%Y&#39;), 800.00, 1999.00, 20, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7499, &#39;ALLEN&#39;, &#39;SALESMAN&#39;, 7698, str_to_date(&#39;20-02-1981&#39;, &#39;%d-%m-%Y&#39;), 1600.00, 300.00, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7521, &#39;WARD&#39;, &#39;SALESMAN&#39;, 7698, str_to_date(&#39;22-02-1981&#39;, &#39;%d-%m-%Y&#39;), 1250.00, 500.00, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7566, &#39;JONES&#39;, &#39;MANAGER&#39;, 7839, str_to_date(&#39;02-04-1981&#39;, &#39;%d-%m-%Y&#39;), 2975.00, null, 20, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7654, &#39;MARTIN&#39;, &#39;SALESMAN&#39;, 7698, str_to_date(&#39;28-09-1981&#39;, &#39;%d-%m-%Y&#39;), 1250.00, 1400.00, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7698, &#39;BLAKE&#39;, &#39;MANAGER&#39;, 7839, str_to_date(&#39;01-05-1981&#39;, &#39;%d-%m-%Y&#39;), 2850.00, null, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7782, &#39;CLARK&#39;, &#39;MANAGER&#39;, 7839, str_to_date(&#39;09-06-1981&#39;, &#39;%d-%m-%Y&#39;), 2450.00, null, 10, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7788, &#39;SCOTT&#39;, &#39;ANALYST&#39;, 7566, str_to_date(&#39;19-04-1987&#39;, &#39;%d-%m-%Y&#39;), 3000.00, null, 20, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7839, &#39;KING&#39;, &#39;PRESIDENT&#39;, null, str_to_date(&#39;17-11-1981&#39;, &#39;%d-%m-%Y&#39;), 5000.00, null, 10, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7844, &#39;TURNER&#39;, &#39;SALESMAN&#39;, 7698, str_to_date(&#39;08-09-1981&#39;, &#39;%d-%m-%Y&#39;), 1500.00, 0.00, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7876, &#39;ADAMS&#39;, &#39;CLERK&#39;, 7788, str_to_date(&#39;23-05-1987&#39;, &#39;%d-%m-%Y&#39;), 1100.00, null, 20, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7900, &#39;JAMES&#39;, &#39;CLERK&#39;, 7698, str_to_date(&#39;03-12-1981&#39;, &#39;%d-%m-%Y&#39;), 950.00, null, 30, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7902, &#39;FORD&#39;, &#39;ANALYST&#39;, 7566, str_to_date(&#39;03-12-1981&#39;, &#39;%d-%m-%Y&#39;), 3000.00, null, 20, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7934, &#39;MILLER&#39;, &#39;CLERK&#39;, 7782, str_to_date(&#39;23-01-1982&#39;, &#39;%d-%m-%Y&#39;), 1300.00, null, 10, null);</span><br><span class="line"></span><br><span class="line">insert into emp (EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO, DESC2)</span><br><span class="line">values (7935, &#39;KATE&#39;, &#39;MANAGER&#39;, null, null, null, null, null, null);</span><br></pre></td></tr></table></figure>
+
+<h1 id="模型创建"><a href="#模型创建" class="headerlink" title="模型创建"></a>模型创建</h1><p>使用SQLAlchemy映射数据库里面的表, 实现模型创建.</p>
+<ol>
+<li>在这里要做一下预备工作.<br>先把代码放上来.<br>db_util.py:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy.orm import sessionmaker</span><br><span class="line">from sqlalchemy import create_engine</span><br><span class="line">from sqlalchemy.ext.declarative import declarative_base</span><br><span class="line"></span><br><span class="line"># 声明一个基类, 所有的模型都需要绑定在这个基类上面, 才能创建到数据库里面去, 而且以只有通过模型才能查询数据库. </span><br><span class="line"># 本次我们先创建表, 但是这个基类依然是必不可少的.</span><br><span class="line">Base &#x3D; declarative_base()  </span><br><span class="line"></span><br><span class="line">engine &#x3D; create_engine(&#39;mysql+pymysql:&#x2F;&#x2F;MYSQL_USER:MYSQL_USER_PWD@localhost:3306&#x2F;sqlalchemy_demo?charset&#x3D;utf8&#39;)   #初学者只需要知道这段是mysql的连接地址</span><br><span class="line">Session &#x3D; sessionmaker(bind&#x3D;engine)</span><br><span class="line"></span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    # 创建表,如果不存在的话</span><br><span class="line">    Base.metadata.create_all(engine)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>接着我们创建模型.<br>我们创建另一个文件, 同样, 我们把代码贴上来.<br>models.py:</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from sqlalchemy import Column, Integer, String</span><br><span class="line">from db_util import Base, Session</span><br><span class="line"></span><br><span class="line">sess &#x3D; Session()</span><br><span class="line"></span><br><span class="line">class Dept(Base):</span><br><span class="line">    __tablename__ &#x3D; &#39;dept&#39;  # __tablename__指明了数据表实际的名字, 一定要和数据库里的表名字匹配.</span><br><span class="line">    deptno &#x3D; Column(Integer, primary_key&#x3D;True)  # 第一个字段指明数据类型. 第二个字段表明它是主键.</span><br><span class="line">    dname &#x3D; Column(String(14))</span><br><span class="line">    loc &#x3D; Column(String(13))</span><br><span class="line"></span><br><span class="line">    def __repr__(self):</span><br><span class="line">        return str(&#123;</span><br><span class="line">            &#39;deptno&#39;: self.deptno,</span><br><span class="line">            &#39;dname&#39;: self.dname,</span><br><span class="line">            &#39;loc&#39;: self.loc</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>本次, 我们先创建一个叫Dept的类, 映射 dept部门表. 对字段不熟悉的请往上翻sql脚本.<br>接下来, 我们通过简单的语句展示我们的劳动成果.</p>
+<p>我们进入python命令行模式, 通过即时反馈来验证我们的代码是否预期完成. 但是我这里建议使用加强版的python命令行工具, IPython.(请同学自行了解iPython的强大之处)<br>先创建虚拟环境.( 我本机开发使用的是 unix like系统, 有时候会用mac, 有时候会用linux的ubuntu.) (虚拟环境的必要性, 请同学们自行了解), 创建完虚拟环境之后使用pip安装 ipython.<br>输入ipython进入命令行模式.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">(venv) ➜  SQLAlchemy_demo git:(master) ✗ ipython</span><br><span class="line">In [1]: from models import *    # 先导入编辑好的代码.</span><br><span class="line"></span><br><span class="line">In [2]: Dept  # 查看是否导入成功.</span><br><span class="line">Out[2]: models.Dept</span><br><span class="line"></span><br><span class="line">In [3]: sess</span><br><span class="line">Out[3]: &lt;sqlalchemy.orm.session.Session at 0x105f6ee48&gt;</span><br><span class="line"></span><br><span class="line">In [4]: sess.query(Dept).first()</span><br><span class="line">Out[4]: &#123;&#39;deptno&#39;: 10, &#39;dname&#39;: &#39;ACCOUNTING&#39;, &#39;loc&#39;: &#39;NEW YORK&#39;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>OK, 我们已经看到成功的查询到了第一个部门!!<br>本次时间比较紧促, 讲解较为粗劣. 后面的我们会继续深入了解 sqlalchemy.</p>
+<hr>
+<p>SQLAlchemy官方网站</p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://notfresh.github.io">张三思</a>
+            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/">https://notfresh.github.io/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/</a> -->
+            <p>发表日期：<a href="https://notfresh.github.io/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/">January 1st 2020, 12:00:00 am</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/">March 30th 2020, 8:09:17 pm</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95/" title= "SQLAlchemy教程-第二章-ORM入门">
+                    <div class="nextTitle">SQLAlchemy教程-第二章-ORM入门</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "p8rskNDpugkOJgrUg6gyCeue-gzGzoHsz",
+        appKey: "tRshEJ6QPFCgboyqVTeORgJ7",
+        placeholder: "请提出有意义和善意的评论，谢绝灌水和恶意",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:notfresh@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/notfresh" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+
+
+
+    <!-- 不蒜子  -->
+    <!-- 
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        
+    </div>
+    
+     -->
+
+
+
+
+
+    
+
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:30vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SQLAlchemy教程-第一章-基础模型"><span class="toc-number">1.</span> <span class="toc-text">SQLAlchemy教程-第一章-基础模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#动机"><span class="toc-number">2.</span> <span class="toc-text">动机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#困难"><span class="toc-number">3.</span> <span class="toc-text">困难</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对自己的希望"><span class="toc-number">4.</span> <span class="toc-text">对自己的希望</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建数据表"><span class="toc-number">5.</span> <span class="toc-text">创建数据表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型创建"><span class="toc-number">6.</span> <span class="toc-text">模型创建</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 34
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E5%86%99%E4%BD%9C-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%9D%E6%88%91%E8%87%AA%E5%B7%B1%E5%86%99%E4%BD%9C/" >写作的原因</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E9%9A%8F%E7%AC%94-%E6%88%91%E7%9A%84%E8%A7%A3%E8%AF%BB---%E5%BC%A0%E4%B8%80%E9%B8%A3%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" >一篇张一鸣文章的解读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-docker/" >docker使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%9A%8F%E7%AC%94-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%85%A5%E4%BE%B5%E6%80%A7%E8%A7%A3%E9%87%8A/" >框架的入侵性解释</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-the-art-of-command-line%20%E8%A7%A3%E8%AF%BB/" >命令行使用技巧-the art of command line</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E5%86%99%E4%BD%9C-markdown%E7%9A%84%E7%94%A8%E6%B3%95/" >Markdown 的用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E8%BF%B7%E6%83%91%E8%BE%A8%E6%9E%90/" >置换算法辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB-%E5%8D%9A%E4%B8%BB%E6%8E%A8%E8%8D%90/" >博主推荐</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/" >vagrant使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-MacOS%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/" >MacOS使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E6%A0%88%E5%9C%A8%E6%B1%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-%E4%B8%AD%E7%BC%80%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E5%BC%8F-python%E5%AE%9E%E7%8E%B0/" >利用栈实现中缀式转后缀式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-vim%E7%9A%84%E4%BD%BF%E7%94%A8/" >Vim的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E5%92%8C%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/" >项目经理和产品经理的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" >心理危机自救指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-pytest%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" >测试框架Pytest的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E5%A5%BD%E7%8E%A9-%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91API%20python3%20demo/" >百度 API python3 Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E6%88%91%E7%9A%84linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" >我的Linux学习之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E7%88%AC%E5%9D%91%E6%8A%80%E5%B7%A7/" >Linux常技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/%E9%9A%8F%E7%AC%94-%E5%AE%9E%E9%AA%8C%E6%A5%BC%E6%8A%A5%E7%8F%AD%E5%AD%A6%E4%B9%A0%E6%84%9F%E8%A7%A6/" >实验楼报班学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B7%A6%E8%BF%9E%E6%8E%A5,%E5%8F%B3%E8%BF%9E%E6%8E%A5,%E5%86%85%E8%BF%9E%E6%8E%A5,%E5%A4%96%E8%BF%9E%E6%8E%A5,%20join,%20left%20join,%20right%20join%20,mysql%20,oracle/" >左连接,右连接,内外连接的辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF%20%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%20%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6/" >一个链表中环的检测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E9%9A%8F%E7%AC%94-%E6%B1%82%E8%81%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%8D%E6%80%9D%E5%92%8C%E6%80%9D%E8%B7%AF/" >求职的一些反思和思路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%AD%90%E9%97%AE%E9%A2%98,%20%E5%A6%82%E4%BD%95%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E6%9F%90%E4%B8%AA%E5%80%BC%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE/" >快速排序子问题-单次排序定位元素</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href= "/2020/01/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-Python%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E4%B9%8B%E7%A9%BA%E6%A0%BC/" >Python编程规范之空格的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/" >SQLAlchemy教程-第一章-基础模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%85%B6%E4%BB%96-%E5%AE%8C%E7%BB%93/" >SQLAlchemy教程-第五章-完结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-mysql%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" >mysql启动失败的一个解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%88%AC%E8%99%AB-scrapy/" >scrapy 入门学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95/" >SQLAlchemy教程-第二章-ORM入门</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%8A%8A%E5%8C%85%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8C%E6%AD%A5%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" >PLSQL中的package迁移脚本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-git%20%E5%B0%8F%E6%A1%88%E4%BE%8B/" >Git 小案例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-%E6%88%91%E6%98%AF%E6%80%8E%E4%B9%88%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0Python%E7%9A%84/" >我的Python学习经历</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%89%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B6/" >SQLAlchemy教程-第三章-ORM进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B62/" >SQLAlchemy教程-第四章-ORM进阶2</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQLAlachemy"><span class="iconfont-archer">&#xe606;</span>SQLAlachemy</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="scrapy"><span class="iconfont-archer">&#xe606;</span>scrapy</span>
+    
+        <span class="sidebar-tag-name" data-tags="付费学习"><span class="iconfont-archer">&#xe606;</span>付费学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络日志"><span class="iconfont-archer">&#xe606;</span>网络日志</span>
+    
+        <span class="sidebar-tag-name" data-tags="程序人生"><span class="iconfont-archer">&#xe606;</span>程序人生</span>
+    
+        <span class="sidebar-tag-name" data-tags="写作"><span class="iconfont-archer">&#xe606;</span>写作</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程语言"><span class="iconfont-archer">&#xe606;</span>编程语言</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="随笔-心情"><span class="iconfont-archer">&#xe60a;</span>随笔-心情</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "张三思"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
