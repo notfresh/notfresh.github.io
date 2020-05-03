@@ -28,7 +28,7 @@
 <meta property="og:description" content="Go语言的故事今天介绍一下Go语言的背景故事。因为自己还没开始学习 Go语言，先了解一下其历史，方便以后的学习。 背景故事2007年，谷歌工程师Rob Pike, Ken Thompson和Robert Griesemer开始设计一门全新的语言，这是Go语言的最初原型。 Go语言的前身是Limbo，Limbo是用于开发运行在小型计算机上的分布式应用的编程语言，他支持模块化编程，编译期和运行时的强类">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-03T14:15:06.538Z">
+<meta property="article:modified_time" content="2020-05-03T14:27:12.604Z">
 <meta property="article:author" content="张三思">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
@@ -278,7 +278,7 @@ height:30vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">2k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
+                        <span>Word count: <span class="post-count word-count">2.4k</span>Reading time: <span class="post-count reading-time">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -442,6 +442,27 @@ height:30vh;
 <p>罗勃特·派克(Robot Pike)<br>昵称为罗勃·派克（Rob Pike），来自加拿大的程序员，曾经加入贝尔实验室，为 UNIX小组的成员。曾经参与过贝尔实验室九号计划、Inferno，与编程语言 Limbo的开发。他与肯·汤普逊共同开发了UTF-8。</p>
 <p>肯尼斯·汤普逊(Ken Thompson)<br>肯·汤普逊（英语：Ken Thompson），是美国计算机科学学者和工程师。黑客文化圈子通常称他为“ken”[1]。在贝尔实验室工作期间，汤普逊设计和实现了Unix操作系统。他创造了B语言——C语言的前身，而且他是Plan 9操作系统的创造者和开发者之一。2006年，汤普逊进入Google公司工作，与他人共同设计了Go语言。他与丹尼斯·里奇同为1983年图灵奖得主。<br>此外，肯·汤普逊还参与过正则表达式和UTF-8编码的设计，改进了文本编辑器QED，创造了ed编辑器。他曾制造过专门用于下国际象棋的电脑“Belle”，并创建了残局数据库。</p>
 <p>后来Ian Lance Taylor实现了基于GCC的go编译器gccgo，Russ Rox的加入推动了语言和库的实际可用性。</p>
+<h2 id="名字由来"><a href="#名字由来" class="headerlink" title="名字由来"></a>名字由来</h2><p>事实上Go语言的称呼就是Go，golang只是Go语言官网的域名。</p>
+<p>Go语言发明人之一的Rob Pike 在 Twitter 上特意说明是 Go：</p>
+<blockquote>
+<p>Neither. The language is called Go, not Golang.<a href="https://link.zhihu.com/?target=http%3A//golang.org/">http://golang.org</a> is just the the web site address, not the name of the language.</p>
+</blockquote>
+<p>同时在其他地方也说过原因：</p>
+<blockquote>
+<p>The name of our language is Go<br>Ruby is called Ruby, not Rubylang.<br>Python is called Python, not Pythonlang.<br>C is called C, not Clang. No. Wait. That was a bad example.<br>Go is called Go, not Golang.<br>Yes, yes, I know all about the searching and meta tags. Sure, whatever,<br>but that doesn’t change the fact that the name of the language is Go.<br>Thank you for your consideration.</p>
+</blockquote>
+<p>其实Go语言经常被叫做Golang的原因主要是两个：</p>
+<ol>
+<li><a href="https://link.zhihu.com/?target=http%3A//go.org">http://go.org</a> 被注册了。所以 Go 只能用 <a href="https://link.zhihu.com/?target=http%3A//golang.org">http://golang.org</a>；</li>
+<li>想要搜点啥信息时，如果搜 go 太宽泛了，特别是 go 还没有这么多用户时，搜 golang 能更精确的找到答案。</li>
+</ol>
+<p>引用<strong>另外一个网友</strong>的话：</p>
+<p>我在《代码的未来》一书中看到了关于Go和Golang两种叫法的由来。</p>
+<p>书中3.2章节最后一部分写道：</p>
+<blockquote>
+<p>​     说句题外话，其实在Go出现很久以前，就已经存在一种叫做“Go!”的语言了。由于Google奉行“不作恶”（Don’t be evil）的信条，因此网上很多人认为Go应该改名。<br>​     话说，语言名称撞车也不是什么新鲜事（用Ruby这个名字的编程语言也有好几个），不过网上有人推荐将Go语言改成Golang或者Issue-9。前者来自Go官方网站的域名（<a href="https://link.zhihu.com/?target=http%3A//golang.org">http://golang.org</a>），后者则是来自“已经有一个叫Go!的语言了，请改名”这个问题报告的编号。</p>
+</blockquote>
+<p>作者写书是在2012年，到现在Golang的叫法确实保留下来了。</p>
 <h1 id="大事件"><a href="#大事件" class="headerlink" title="大事件"></a>大事件</h1><p>2009年11月10日，Go语言以开放源代码的方式向全球发布。</p>
 <p>2010 年 ：当选 2009 年年度语言，谷歌投入使用</p>
 <p>2011 年 ：Google App Engine 支持 Go 语言</p>
@@ -468,7 +489,7 @@ height:30vh;
             <p>Author：<a href="https://notfresh.github.io">张三思</a>
             <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/">https://notfresh.github.io/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/</a> -->
             <p>发表日期：<a href="https://notfresh.github.io/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/">May 1st 2020, 12:00:00 am</a>
-            <p>更新日期：<a href="https://notfresh.github.io/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/">May 3rd 2020, 10:15:06 pm</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/">May 3rd 2020, 10:27:12 pm</a>
             <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -623,7 +644,7 @@ top:30vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go语言的故事"><span class="toc-number">1.</span> <span class="toc-text">Go语言的故事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#背景故事"><span class="toc-number">2.</span> <span class="toc-text">背景故事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特点"><span class="toc-number">3.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创始人"><span class="toc-number">4.1.</span> <span class="toc-text">创始人</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大事件"><span class="toc-number">5.</span> <span class="toc-text">大事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Go语言的故事"><span class="toc-number">1.</span> <span class="toc-text">Go语言的故事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#背景故事"><span class="toc-number">2.</span> <span class="toc-text">背景故事</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特点"><span class="toc-number">3.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">4.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#创始人"><span class="toc-number">4.1.</span> <span class="toc-text">创始人</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#名字由来"><span class="toc-number">4.2.</span> <span class="toc-text">名字由来</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大事件"><span class="toc-number">5.</span> <span class="toc-text">大事件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
