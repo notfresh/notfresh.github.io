@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="张三思">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="张三思">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="张三思的个人主页 notfresh ">
+    <meta name="description" content="序分享这篇文章的目的是以一个故事的形式, 告诉大家, 一个小的Idea和行动逐步积累可以改变世界.   关于操作系统的重要性和发展, 可能很多非计算机专业的同学不太了解, 我这里简单的说一下: 改变世界的苹果设备搭载的 MacOS 和 IOS 和非常流行的 Andorid 都是本文提到的操作系统 Unix 的后代. 而其中 GNU 的诞生对于催生 MacOS 和 Android 有着至关重要的作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="整理#开源的起源:GNU与Linux">
+<meta property="og:url" content="https://notfresh.github.io/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/index.html">
+<meta property="og:site_name" content="张三思的个人主页">
+<meta property="og:description" content="序分享这篇文章的目的是以一个故事的形式, 告诉大家, 一个小的Idea和行动逐步积累可以改变世界.   关于操作系统的重要性和发展, 可能很多非计算机专业的同学不太了解, 我这里简单的说一下: 改变世界的苹果设备搭载的 MacOS 和 IOS 和非常流行的 Andorid 都是本文提到的操作系统 Unix 的后代. 而其中 GNU 的诞生对于催生 MacOS 和 Android 有着至关重要的作用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/image-20200505234401645.png">
+<meta property="og:image" content="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/Unix_history-simple.png">
+<meta property="article:published_time" content="2020-05-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-05T16:20:52.357Z">
+<meta property="article:author" content="张三思">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/image-20200505234401645.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>整理#开源的起源:GNU与Linux · 张三思的个人博客</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >张三思的个人博客.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">整理#开源的起源:GNU与Linux</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>张三思的个人博客.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:30vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            整理#开源的起源:GNU与Linux
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count word-count">12.7k</span>Reading time: <span class="post-count reading-time">45 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/05/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>分享这篇文章的目的是以一个故事的形式, 告诉大家, 一个小的Idea和行动逐步积累可以改变世界.  </p>
+<p>关于操作系统的重要性和发展, 可能很多非计算机专业的同学不太了解, 我这里简单的说一下: 改变世界的苹果设备搭载的 MacOS 和 IOS 和非常流行的 Andorid 都是本文提到的操作系统 Unix 的后代. 而其中 GNU 的诞生对于催生 MacOS 和 Android 有着至关重要的作用, 没有 GNU, 也许我们用不到今天的智能手机.  </p>
+<p>免费, 开源, 分享, 利他主义曾经改变了世界.  </p>
+<p>GNU的诞生来源于 Richard Mathew Stallman 的一个小小的Idea, 以及坚持不懈的努力. 让我们一起看看GNU的诞生, 相信你我都会从中受到启发.   </p>
+<p>本文以下大部分转载自《鸟哥的Linux私房菜》.  </p>
+<h1 id="Linux的诞生前"><a href="#Linux的诞生前" class="headerlink" title="Linux的诞生前"></a>Linux的诞生前</h1><p>早在 Linux 出现之前的二十年 ( 大约在 1970 年代 )， 就有一个相当稳定而成熟的操作系统存在了！那就是 Linux 的老大哥『 Unix 』是也！ 怎么这么说呢？！他们这两个家伙有什么关系呀？这里就给他说一说啰！众所皆知的， Linux 的核心是由 Linus Torvalds 在 1991 年的时候给他开发出来的， 并且丢到网络上提供大家下载，后来大家觉得这个小东西 ( Linux Kernel ) 相当的小而精巧，所以慢慢的就有相当多的朋友投入这个小东西的研究领域里面去了！ 但是为什么这的小东西这么棒呢？！然而又为什么大家都可以免费的下载这个东西呢？！ 嗯！等鸟哥慢慢的唬xx….喔不！听我慢慢的道来！</p>
+<h2 id="1969-年以前：一个没有完成的梦想：-Bell-MIT-与-GE-的『-Multics』系统"><a href="#1969-年以前：一个没有完成的梦想：-Bell-MIT-与-GE-的『-Multics』系统" class="headerlink" title="1969 年以前：一个没有完成的梦想： Bell, MIT 与 GE 的『 Multics』系统"></a>1969 年以前：一个没有完成的梦想： Bell, MIT 与 GE 的『 Multics』系统</h2><p>早期的计算机并不像现在的个人计算机一样，他可不是一般人碰的起的呢～ 除非是军事或者是高科技用途，或者是学术单位的学术研究，否则，真的很难接触到。 非但如此，早期的计算机架构还很难使用，除了指令周期并不快之外，操作接口也很困扰的！ 在那个时候，写程序是件很可怜的事情，因为，程序设计者，必须要将程序相关的信息在读卡纸上面打洞， 然后再将读卡纸插入卡片阅读机来将信息读入主机中运算。光是这样就很麻烦了，如果程序有个小地方写错， 哈哈！光是重新打卡就很惨，加上主机少，用户众多，光是等待，就耗去很多的时间了！</p>
+<p>在之后，经由操作系统的改良，使得后来可以使用键盘来进行信息的输入/输出。 不过，在一间学校里面，主机毕竟可能只有一部，如果多人等待使用，那怎么办？ 好在 1960 年代初期麻省理工学院 (MIT) 发展了所谓的： 『兼容分时系统( Compatible Time-Sharing System, CTSS )』， 它可以让大型主机透过提供数个终端机(terminal)以联机进入主机，来利用主机的资源进行运算工作。 </p>
+<p>如此一来，无论主机在哪里，只要在终端机前面进行输入输出的作业，就可利用主机提供的功能了。 不过，需要注意的是，此时终端机只具有输入/输出的功能，本身完全不具任何运算或者软件安装的能力。 而且，比较先进的主机大概也只能提供 30 个不到的终端机而已。</p>
+<p>为了更加强化大型主机的系统，以让主机的资源可以提供更多使用者来利用，所以在 1965 年前后， 由贝尔实验室 (Bell)、麻省理工学院 (MIT) 及奇异公司 (GE) 共同发起了 Multics 的计划， Multics 目的是想要让大型主机可以达成提供 300 个以上的终端机联机使用的目标。 不过，到了 1969 年前后，计划进度落后，资金也短缺，所以该计划就宣告不治…..喔！是宣告失败～ (注： Multics 有复杂、多数的意思存在。)</p>
+<h2 id="1969-年：-Ken-Thompson-的小型-file-server-system"><a href="#1969-年：-Ken-Thompson-的小型-file-server-system" class="headerlink" title="1969 年： Ken Thompson 的小型 file server system"></a>1969 年： Ken Thompson 的小型 file server system</h2><p>在认为 Multics 计划不可能成功之后，贝尔研究室 就退出该计划。不过，原本参与 Multics 计划的人员中，已经从该计划当中获得一些点子， Ken Thompson 就是其中一位！Thompson 因为自己的需要，希望开发一个小小的操作系统， 以提供自己的需求。在开发时，有一部 DEC (Digital Equipment Corporation) 的 PDP-7 没人使用， 于是他就准备针对这部主机进行操作系统核心程序的撰写。本来 Thompson 是没时间的， 有趣的是，在 1969 年八月份左右，刚好 Thompson 的妻儿去了美西探亲， 于是他有了额外的一个月的时间好好的待在家将一些构想实现出来！ 经过四个星期的奋斗，他终于以组译语言 (Assembler) 写出了一个核心程序，同时包括一些核心工具程序， 以及一个小小的文件系统。那个系统就是 Unix 的原型！ 当时 Thompson 将 Multics 庞大的复杂系统简化了不少，于是同实验室的朋友都戏称这个系统为： Unics 。 Thompson 的这个文件系统有两个重要的概念，分别是：</p>
+<ul>
+<li>所有的程序或系统装置都是档案</li>
+<li>不管建构编辑器还是附属档案，所写的程序只有一个目的，且要有效的完成目标。</li>
+</ul>
+<h2 id="1973-年：-Unix-的正式诞生，Ritchie-等人以-C-语言写出第一个正式-Unix-核心"><a href="#1973-年：-Unix-的正式诞生，Ritchie-等人以-C-语言写出第一个正式-Unix-核心" class="headerlink" title="1973 年： Unix 的正式诞生，Ritchie 等人以 C 语言写出第一个正式 Unix 核心"></a>1973 年： Unix 的正式诞生，Ritchie 等人以 C 语言写出第一个正式 Unix 核心</h2><p>由于 Thompson 写的那个操作系统实在太好用了，所以在贝尔实验室内部广为流传，并且数度经过改版。 但是，比较重要的改版则发生在 1973 年。Unix 本来是以组译语言写成的，后来因为系统移植与效能的需求， 该系统被 B 语言所改写。不过，效能依旧不是很好。后来， Dennis Ritchie 将 B 语言重新改写成 C 语言，C 语言算是比较高阶的程序语言，可以在不同的机器上面运作， 而 Ritchie 等人也同时将原本 Thompson 的那个操作系统重新以 C 语言改写， 最后发行出 Unix 的正式版本！</p>
+<p>在这个时候需要特别注意的是，贝尔实验室是隶属于 AT&amp;T 的，只是 AT&amp;T 当时忙于其他商业活动， 所以对于 Unix 是采取比较开放的态度，此外， Unix 在这个时期的发展者都是贝尔实验室的工程师， 这些工程师对于程序当然相当有研究，所以， Unix 在此时当然是不容易被一般人所接受的！ 此外，也需要特别强调，由于 Unix 是以较高阶的 C 语言写的，相对于组译语言需要与硬件有密切的配合， 高阶的 C 语言与硬件的相关性就没有这么大了！所以，这个改变也使得 Unix 很容易被移植到不同的机器上面喔！</p>
+<h3 id="1977-年：-重要的-Unix-分支：-BSD-的诞生"><a href="#1977-年：-重要的-Unix-分支：-BSD-的诞生" class="headerlink" title="1977 年： 重要的 Unix 分支： BSD 的诞生"></a>1977 年： 重要的 Unix 分支： BSD 的诞生</h3><p>前面说到，虽然贝尔属于 AT&amp;T ，但是 AT&amp;T 此时对于 Unix 是采取开放的态度， 此外， Unix 是以高阶的 C 语言写成的，理论上是具有可移植性的！ 所以，只要取得 Unix 的原始码，并且针对大型主机的特性加以修订原有的原始码( Source Code )， 就可能将 Unix 移植到另一部不同的主机上头了。所以在 1973 年以后， Unix 便得以与学术界合作开发！最重要的接触就是与加州柏克莱 ( Berkeley ) 大学的合作了。 柏克莱大学的 Bill Joy 在取得了 Unix 的核心原始码后，着手修改成适合自己机器的版本， 并且同时增加了很多工具软件与编译程序，最终将他命名为 Berkeley Software Distribution (BSD) 。这个 BSD 是 Unix 很重要的一个分支， Bill Joy 也是 Unix 业者『 Sun 』这家公司的创办者！ Sun 公司即是以 BSD 发展的核心进行自己的商业 Unix 版本的发展的。 (后来可以安装在 x86 硬件架构上面 FreeBSD 即是 BSD 改版而来！)</p>
+<h2 id="1979-年：-一个措手不及的版权宣告！"><a href="#1979-年：-一个措手不及的版权宣告！" class="headerlink" title="1979 年： 一个措手不及的版权宣告！"></a>1979 年： 一个措手不及的版权宣告！</h2><p>由于 Unix 的高度可移植性与强大的效能，加上当时并没有版权的纠纷， 所以让很多商业公司开始了 Unix 操作系统的发展，例如 AT&amp;T 自家的 System V、IBM 的 AIX 以及 HP 与 DEC 等公司，都有推出自家的主机搭配自己的 Unix 操作系统。</p>
+<p>但是，如同我们前面提到的，操作系统的核心 ( Kernel ) 必须要跟硬件配合， 以提供及控制硬件的资源进行良好的工作！ 而在早期每一家生产计算机硬件的公司还没有所谓的『协议』的概念， 所以每一个计算机公司出产的硬件自然就不相同啰！因此他们必须要为自己的计算机硬件开发合适的 Unix 系统。 例如在学术机构相当有名的 Sun 、 Cray 与 HP 就是这一种情况。 他们开发出来的 Unix 操作系统以及内含的相关软件并没有办法在其他的硬件架构下工作的！ 且由于没有厂商针对个人计算机设计 Unix 系统，因此，在早期并没有支持个人计算机的 Unix 操作系统的出现 ( 由于 Unix 强调的是多人多任务的环境，但早期的 x86 个人计算机架构下的 CPU 是没有能力达到多任务的作业，因此，并没有人对移植 Unix 到 x86 的计算机上有兴趣 )。 每一家公司自己出的 Unix 虽然在架构上面大同小异，但是却真的仅能支持自身的硬件， 所以啰，早先的 Unix 只能与服务器 ( Server ) 或者是大型工作站 ( Workstation ) 划上等号！</p>
+<p>但是这个高度开放的 Unix 系统在 1979 年有了重大的转折～ 因为 AT&amp;T 由于商业的考虑，以及在当时现实环境下的思考，于是将想 Unix 的版权收回去， 因此，在 AT&amp;T 在 1979 年发行的第七版 Unix 中，特别提到了 『不可对学生提供原始码』的严格限制！ 同时，也造成 Unix 业界之间的紧张气氛，并且也引爆了很多的商业纠纷～</p>
+<h2 id="1984-年之一：-x86-架构的-Minix-诞生"><a href="#1984-年之一：-x86-架构的-Minix-诞生" class="headerlink" title="1984 年之一： x86 架构的 Minix 诞生"></a>1984 年之一： x86 架构的 Minix 诞生</h2><p>关于 1979 年的版权声明中，影响最大的当然就是学校教 Unix 相关学问的教授了！ 想一想，如果没有核心原始码，那么如何教导学生认识 Unix 呢？ 这问题对于 Andrew Tanenbaum (谭宁邦)教授来说，实在是很伤脑筋的！ 不过，学校的课程还是得继续啊！那怎么办？？ 既然 1979 年的 Unix 第七版可以在 Intel 的 x86 架构上面进行移植， 那么是否意味着可以将 Unix 改写并移植到 x86 上面了呢？在这个想法上， 谭宁邦教授于是乎自己动手写了 Minix 这个 Unix Like 的核心程序！ 在撰写的过程中，为了避免版权纠纷，谭宁邦完全不看 Unix 核心原始码！ 并且强调他的 Minix 必须能够与 Unix 兼容才行！谭宁邦在 1984 年开始撰写核心程序， 到了 1986 年终于完成，并于次年出版 Minix 相关书籍，同时与新闻组相结合～</p>
+<p>这个 Minix 版本比较有趣的地方是，他并不是完全免费的，无法在网络上提供下载！ 必须要透过磁盘/磁带购买才行！虽然真的很便宜～不过，毕竟因为没有在网络上流传， 所以 Minix 的传递速度并没有很快速！此外，购买时，随磁盘还会附上 Minix 的原始码！ 这意味着使用者可以学习 Minix 的核心程序设计概念喔！ (这个特色对于 Linux 的启始开发阶段，可是有很大的关系喔！) 此外，开发者仅有谭宁邦教授，因为学者很忙啊！加上谭宁邦始终认为 Minix 主要用在教育用途上面， 所以对于 Minix 是点到为止！所以， Minix 很受欢迎没错， 不过，使用者的要求/需求的声音可能就比较没有办法上升到比较高的地方了！ 这样说，您明白吧？？？ ^_^</p>
+<h2 id="1984-年之二：-GNU-与-FSF-计划的成立"><a href="#1984-年之二：-GNU-与-FSF-计划的成立" class="headerlink" title="1984 年之二： GNU 与 FSF 计划的成立"></a>1984 年之二： GNU 与 FSF 计划的成立</h2><p>Richard Mathew Stallman (史托曼) 在 1984 年发起的 GNU 计划，对于现今的自由软件风潮， 真有不可磨灭的地位！目前我们所使用得很多自由软件，几乎均直接或间接帮助于 GNU 这个计划呢！ 那么史托曼是何许人也？为何他会发起这个 GNU 计划呢？</p>
+<p>Richard Mathew Stallman (生于 1953 年， 网络上自称的 ID 为 RMS) 从小就很聪明！他在 1971 年的时候，进入黑客圈中相当出名的人工智能实验室(AI Lab.)， 这个时候的黑客专指计算机功力很强的人，而非破坏计算机的怪客 (cracker) 喔！ 当时的黑客圈对于软件的着眼点几乎都是在『分享』，所以并没有专利方面的困扰！ 这个特色对于史托曼的影响很大！不过，后来由于管理阶层的问题，导致实验室的优秀黑客离开该实验室， 并且进入其他商业公司继续发展优秀的软件。但史托曼并不服输，仍然持续在原来的实验室开发新的程序与软件。 后来，他发现到，自己一个人并无法完成所有的工作，于是想要成立一个开放的团体来共同努力！</p>
+<p>1983 年以后，因为实验室硬件的更换，使得史托曼无法继续以原有的硬件与操作系统继续自由程序的撰写～ 而且他进一步发现到，过去他所使用的 Lisp 操作系统，是麻省理工学院的专利软件， 是无法共享的，这对于想要成立一个开放团体的史托曼是个阻碍。于是他便放弃了 Lisp 这个系统。 后来，他接触到 Unix 这个系统，并且发现， Unix 在理论与实际上，都可以在不同的机器间进行移植。 于是他开始转而使用 Unix 系统。因为 Lisp 与 Unix 是不同的系统， 所以，他原本已经撰写完毕的软件是无法在 Unix 上面运行的！为此， 他就开始将软件移植到 Unix 上面。并且，为了让软件可以在不同的平台上运作， 因此，史托曼将他发展的软件均撰写成可以移植的型态！</p>
+<p>1984 年，史托曼开始 GNU 计划，这个计划的目的是想要： 建立一个自由的开放的 Unix 操作系统。 但是建立一个操作系统谈何容易啊！而且在当时的 GNU 是仅有自己一个人单打独斗的史托曼～ 这实在太麻烦，但又不能不做这个计划，于是史托曼反其道而行～『既然操作系统太复杂， 我就先写可以在 Unix 上面运行的小程序，这总可以了吧？呵呵！』在这个想法上， 史托曼便开始了程序的写作。在写作期间，为了不让自己吃上官司，他绝对不看专利软件的原始码！ 为了这个计划，他开始使用原本 Unix 上面跑的软件， 并自行撰写功能与 Unix 原有专利软件相仿的软件。</p>
+<p>但不论是什么软件，都得要进行编译成为二进制文件(binary file)后才能够执行， 因此他便开始撰写 C 语言的编译程序，那就是现在相当有名的 GNU C (gcc)！ 这个点相当的重要！这是因为 C 语言编译程序版本众多，但都是专利软件， 如果他写的 C 编译程序够棒，效能够佳，那么将会大大的让 GNU 计划出现在众人眼前！</p>
+<p>但开始时并不顺利，为此，他先转而将 Emacs 编辑器写成可以在 Unix 上面跑得软件， 并公开公布原始码，因为 Emacs 太优秀了，因此，很多人便直接向他购买。此时 Internet 尚未流行， 所以，史托曼便借着 Emacs 以磁带(tape)出售，赚了一点钱 ，进而开始全力撰写其他软件。并且成立 自由软件基金会 (FSF, Free Software Foundation)，请更多工程师与志工撰写软件。 终于还是完成了 GCC，这比 Emacs 还更有帮助！ 此外，他还撰写了更多可以被呼叫的 C 函式库(GNU C library)， 以及可以被使用来操作操作系统的基本接口 BASH shell ！ 这些都在 1990 年左右完成了！</p>
+<blockquote>
+<p>Tips: 如果纯粹使用文本编辑器来编辑程序的话，那么程序语法如果写错时， 只能利用编译时发生的错误讯息来修订了，这样实在很没有效率。 Emacs 则是一个很棒的编辑器！注意！是编辑(editor)而非编译(compiler)！ 他可以很快的立刻显示出您写入的语法可能有错误的地方，这对于程序设计师来说， 实在是一个好到不能再好的工具了！所以才会这么的受到欢迎啊！  </p>
+</blockquote>
+<p>到了 1985 年，为了避免 GNU 所开发的自由软件被其他人所利用而成为专利软件， 所以他与律师草拟了有名的通用公共许可证 (General Public License, GPL)， 并且称呼他为 copyleft (相对于专利软件的 copyright！)。 关于 GPL 的相关内容我们在下一个小节继续谈论，在这里，必须要说明的是， 由于有 GNU 所开发的几个重要软件，如：</p>
+<ul>
+<li>Emacs</li>
+<li>GNU C (GCC)</li>
+<li>GNU C Library (glibc)</li>
+<li>Bash shell</li>
+</ul>
+<p>造成后来很多的软件开发者可以藉由这些基础的工具来进行程序开发！ 进一步壮大了自由软件团体！这是很重要的！不过，对于 GNU 的最初构想 『建立一个自由的 Unix 操作系统』来说，有这些优秀的程序是仍无法满足， 因为，当下并没有『自由的 Unix 核心』存在…..所以这些软件仍只能在那些有专利的 Unix 平台上工作～～一直到 Linux 的出现……</p>
+<h2 id="1991-年：-芬兰大学生-Linus-Torvalds-的一则简讯"><a href="#1991-年：-芬兰大学生-Linus-Torvalds-的一则简讯" class="headerlink" title="1991 年： 芬兰大学生 Linus Torvalds 的一则简讯"></a>1991 年： 芬兰大学生 Linus Torvalds 的一则简讯</h2><p>到了 1991 年，芬兰的赫尔辛基大学的 Linus Torvalds 在 BBS 上面贴了一则消息， 宣称他以 bash, gcc 等工具写了一个小小的核心程序，这个核心程序可以在 Intel 的 386 机器上面运作，让很多人很感兴趣！从此开始了 Linux 不平凡的路程！</p>
+<h1 id="关于-GNU-计划"><a href="#关于-GNU-计划" class="headerlink" title="关于 GNU 计划"></a>关于 GNU 计划</h1><p>1984 年创立 GNU 计划与 FSF 基金会的 Stallman 先生认为， 写程序最大的快乐就是让自己发展的良好的软件让大家来使用了！ 而既然程序是想要分享给大家使用的，不过，每个人所使用的计算机软硬件并不相同， 既然如此的话，那么该程序的原始码 (Source code) 就应该要同时释出， 这样才能方便大家修改而适用于每个人的计算机中呢！这个将原始码释出的举动， 就称为 Open Source ！此外，史托曼同时认为，如果您将您程序的 Source code 分享出来时，若该程序是很优秀的，那么将会有很多人使用， 而每个人对于该程序都可以查阅 source code ，无形之中，就会有一票人帮您除错啰！ 您的这支程序将会越来越壮大！越来越优秀呢！</p>
+<p>而为了避免自己的开发出来的 Open source 的自由软件被拿去做成专利软件， 于是 Stallman 同时将 GNU 与 FSF 发展出来的软件，都挂上 GPL 的版权宣告～ 这个 FSF 的核心观念是『版权制度是促进社会进步的手段， 版权本身不是自然权力。』对于 FSF 有兴趣或者对于 GNU 想要更深入的了解时，请参考树德大学的洪朝贵教授的网站 <a href="http://saturn.stu.edu.tw/~ckhung/a/c_83.php，或直接到" target="_blank" rel="noopener">http://saturn.stu.edu.tw/~ckhung/a/c_83.php，或直接到</a> GNU 去： <a href="http://www.gnu.org" target="_blank" rel="noopener">http://www.gnu.org</a> 里面有更为深入的解说！</p>
+<blockquote>
+<p>Tips:<br>为什么要称为 GNU 呢？其实 GNU 是 GNU’s Not Unix 的缩写， 意思是说， GNU 并不是 Unix 啊！那么 GNU 又是什么呢？ 就是 GNU’s Not Unix 嘛！…..如果您写过程序， 就会知道，这个 GNU = GNU’s Not Unix 可是无穷循环啊！忙碌～<br>另外，什么是 Open Source 呢？所谓的 source 是程序发展者写出的源代码， Open Source 就是，软件在发布时，同时将作者的原始码一起公布的意思！</p>
+</blockquote>
+<p>那么这个 GPL ( GNU General Public License, GPL ) 是什么玩意儿？ 为什么要将自由软件挂上 GPL 的『版权宣告』呢？这个版权宣告对于作者有何好处？<br>首先， Stallman 对 GPL 一直是强调 Free 的，这个 Free 的意思是这样的：</p>
+<p>“Free software” is a matter of liberty, not price. To understand the concept, you should think of “free speech”, not “free beer”. “Free software” refers to the users freedom to run, copy, distribute, study, change, and improve the software </p>
+<p>大意是说， Free Software (自由软件) 是一种自由的权力，并非是『价格！』 举例来说，你可以拥有自由呼吸的权力、你拥有自由发表言论的权力， 但是，这并不代表您可以到处喝『免费的啤酒！(free beer)』，也就是说， 自由软件的重点并不是指『免费』的，而是指具有『自由度, freedom』的软件， 史托曼进一步说明了自由度的意义是： 使用者可以自由的执行、复制、再发行、学习、修改与强化自由软件。 这无疑是个好消息！因为如此一来，你所拿到的软件可能原先只能在 Unix 上面跑， 但是经过原始码的修改之后，你将可以拿他在 Linux 或者是 Windows 上面来跑！总之，一个软件挂上了 GPL 版权宣告之后，他自然就成了自由软件！ 这个软件就具有底下的特色：</p>
+<ul>
+<li>取得软件与原始码：您可以根据自己的需求来执行这个自由软件；</li>
+<li>复制：您可以自由的复制该软件；</li>
+<li>修改：您可以将取得的原始码进行程序修改工作，使之适合您的工作；</li>
+<li>再发行：您可以将您修改过的程序，再度的自由发行，而不会与原先的撰写者冲突；</li>
+<li>回馈：您应该将您修改过的程序代码回馈于社群！</li>
+</ul>
+<p>但请特别留意，您所修改的任何一个自由软件都不应该也不能这样：</p>
+<ul>
+<li>修改授权：您不能将一个 GPL 授权的自由软件，在您修改后而将他取消 GPL 授权～</li>
+<li>单纯贩卖：您不能单纯的贩卖自由软件。</li>
+</ul>
+<p>也就是说，既然 GPL 是站在互助互利的角度上去开发的，您自然不应该将大家的成果占为己有， 而取消 GPL 授权的！对吧！因此您当然不可以将一个 GPL 软件的授权取消， 即使您已经对该软件进行大幅度的修改！那么自由软件也不能贩卖吗？当然不是！还记得上一个小节里面， 我们提到史托曼藉由贩卖 Emacs 取得一些经费，让自己生活不至于匮乏吧？？是的！ 自由软件是可以贩卖的，不过，不可仅贩卖该软件，应同时搭配售后服务与相关手册～ 这些可就需要工本费了呢！</p>
+<p>很多人还是有疑问，目前不是有很多 Linux 开发商吗？为何他们可以贩卖 Linux 这个 GPL 授权的软件？ 原因很简单，因为他们大多都是贩卖『售后服务！』所以，他们所使用的自由软件， 都可以在他们的网站上面下载！(当然，每个厂商他们自己开发的工具软件就不是 GPL 的授权软件了！) 但是，您可以购买他们的 Linux 光盘，如果您购买了光盘，他们会提供相关的手册说明文件， 同时也会提供您数年不等的咨询、售后服务、软件升级与其他协力工作等等的附加价值！ 所以说，目前自由软件工作者，他们所赖以维生的，几乎都是在『服务』这个领域呢！ 毕竟自由软件并不是每个人都会撰写，有人有需要您的自由软件时，他就会请求您的协助， 此时，您就可以透过服务来收费了！这样来说， 自由软件确实还是具有商业空间的喔！</p>
+<blockquote>
+<p>Tips:<br>很多人对于 GPL 授权一直很疑惑，对于 GPL 的商业行为更是无法接受！ 关于这一点，鸟哥在这里还是要再次的申明， GPL 是可以从事商业行为的！ 而很多的作者也是藉由这些商业行为来得以取得生活所需，更进一步去发展更优秀的自由软件！ 千万不要听到『商业』就排斥！这对于发展优良软件的朋友来说，是不礼貌的！    鸟哥的图示</p>
+</blockquote>
+<p>上面提到的大多是与用户有关的项目，那么 GPL 对于自由软件的作者有何优点呢？ 大致的优点有这些：</p>
+<ul>
+<li>软件安全性较佳；</li>
+<li>软件执行效能较佳；</li>
+<li>软件除错时间较短；</li>
+<li>贡献的原始码远永都存在。 </li>
+</ul>
+<p>这是因为既然是 Open Source 的自由软件，那么您的程序代码将会有很多人帮您查阅， 如此一来，程序的漏洞与程序的优化将会进展的很快！所以，在安全性与效能上面， 自由软件一点都不输给商业软件喔！此外，因为 GPL 授权当中，修改者并不能修改授权， 因此，您如果曾经贡献过程序代码，嘿嘿！您将名留青史呢！不错吧！ ^_^</p>
+<p>不过，就鸟哥的观点来看， GPL 对于程序开发者的优点是相当多的，不过， 对于不熟悉程序的一般人来说， GPL 的优点其实不太容易看出来～ 首先，虽然他是随手可得的自由软件，不过，您也必须要会使用基本的编译程序才行吧！ (呵呵！这也是您为何要买这本书/察看鸟哥的网站的原因吧！ ^_^) 这对于一般人来说并不容易！当然啦，如果每个人都跟 Stallman 一样神，那商业公司就不用存在啦！ 嘿嘿！对于不懂程序的人来说，商业公司是一个很快速的解决之道啊！ 而对于我们广大的读者群来说，认识了/学习了 Linux 与自由软件的相关技巧后， 对于未来真的是有很不错的帮助喔！</p>
+<h1 id="Linux的诞生与繁荣"><a href="#Linux的诞生与繁荣" class="headerlink" title="Linux的诞生与繁荣"></a>Linux的诞生与繁荣</h1><p><a href="http://en.wikipedia.org/wiki/Linus_Torvalds" target="_blank" rel="noopener">Linus Torvalds</a>(托瓦兹, 1969年出生)的外祖父是赫尔辛基大学的统计学家， 他的外祖父为了让自己的小孙子能够学点东西，所以从小就将托瓦兹带到身边来管理一些微计算机。 在这个时期，托瓦兹接触了汇编语言(Assembly Language)，那是一种直接与芯片对谈的程序语言，也就是所谓的低级语言。 必须要很了解硬件的架构，否则很难以汇编语言撰写程序的。</p>
+<p>在1988年间，托瓦兹顺利的进入了赫尔辛基大学，并选读了计算机科学系。在就学期间，因为学业的需要与自己的兴趣， 托瓦兹接触到了Unix这个操作系统。当时整个赫尔辛基只有一部最新的Unix系统，同时仅提供16个终端机(terminal)。 还记得我们上一节刚刚提过的，早期的计算机仅有主机具有运算功能，terminal仅负责提供Input/Output而已。在这种情况下， 实在很难满足托瓦兹的需求，因为…..光是等待使用Unix的时间，就很耗时～为此，他不禁想到： 『我何不自己搞一部Unix来玩？』不过，就如同Stallman当初的GNU计划一样，要写核心程序，谈何容易～</p>
+<p>不过，幸运之神并未背离托瓦兹，因为不久之后，他就知道有一个类似Unix的系统， 并且与Unix完全兼容，还可以在Intel 386机器上面跑的操作系统， 那就是我们上一节提过的，谭宁邦教授为了教育需要而撰写的Minix系统！ 他在购买了最新的Intel 386的个人计算机后，就立即安装了Minix这个操作系统。 另外，上个小节当中也谈到，Minix这个操作系统是有附上原始码的， 所以托瓦兹也经由这个原始码学习到了很多的核心程序设计的设计概念喔！</p>
+<p><strong>对386硬件的多任务测试</strong></p>
+<p>事实上，托瓦兹对于个人计算机的CPU其实并不满意，因为他之前碰的计算机都是工作站型的计算机， 这类计算机的CPU特色就是可以进行『多任务处理』的能力。什么是多任务呢？理论上， 一个CPU在一个时间内仅能进行一个程序， 那如果有两个以上的程序同时出现到系统中呢？举例来说， 你可以在现今的计算机中同时开启两个以上的办公软件，例如电子电子表格与文字处理软件。 这个同时开启的动作代表着这两个程序同时要交给CPU来处理～</p>
+<p>啊！CPU一个时间点内仅能处理一个程序，那怎么办？没关系，这个时候如果具有多任务能力的CPU就会在不同的程序间切换～ 还记得前一章谈到的CPU频率吧？假设CPU频率为1GHz的话，那表示CPU一秒钟可以进行109次工作。 假设CPU对每个程序都只进行1000次运作周期，然后就得要切换到下个程序的话，那么CPU一秒钟就能够切换106次呢！ (当然啦，切换工作这件事情也会花去一些CPU时间，不过这里暂不讨论)。这么快的处理速度下，你会发现， 两个程序感觉上几乎是同步在进行啦！</p>
+<p>早期Intel x86架构计算机不是很受重视的原因，就是因为x86的芯片对于多任务的处理不佳， CPU在不同的工作之间切换不是很顺畅。但是这个情况在386计算机推出后，有很大的改善。 托瓦兹在得知新的386芯片的相关信息后，他认为，以性能价格比的观点来看， Intel的386相当的便宜，所以在性能上也就稍微可以将就将就 ^_^。最终他就贷款去买了一部Intel的386来玩。</p>
+<p>早期的计算机效能没有现在这么好，所以压榨计算机效能就成了工程师的一项癖好！ 托瓦兹本人早期是玩汇编语言的，汇编语言对于硬件有很密切的关系，托瓦兹自己也说：『我始终是个性能癖』^<em>^。 为了彻底发挥386的效能，于是托瓦兹花了不少时间在测试386机器上！ 他的重要测试就是在测试386的多功效能。首先，他写了三个小程序，一个程序会持续输出A、一个会持续输出B， 最后一个会将两个程序进行切换。他将三个程序同时执行，结果，他看到屏幕上很顺利的一直出现ABABAB…… 他知道，他成功了！ ^</em>^</p>
+<p><img src="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/image-20200505234401645.png" alt="image-20200505234401645"></p>
+<p><strong>初次释出Linux 0.02</strong></p>
+<p>探索完了386的硬件之后，终于拿到Minix并且安装在托瓦兹的386计算机上之后，托瓦兹跟BBS上面一堆工程师一样， 他发现Minix虽然真的很棒，但是谭宁邦教授就是不愿意进行功能的加强，导致一堆工程师在操作系统功能上面的欲求不满！ 这个时候年轻的托瓦兹就想：『既然如此，那我何不自己来改写一个我想要的操作系统？』 于是他就开始了核心程序的撰写了。</p>
+<p>撰写程序需要什么呢？首先需要的是能够进行工作的环境，再来则是可以将原始码编译成为可执行文件的编译程序。 好在有GNU计划提供的bash工作环境软件以及gcc编译程序等自由软件， 让托瓦兹得以顺利的撰写核心程序。他参考Minix的设计理念与书上的程序代码，然后仔细研究出386个人计算机的效能优化， 然后使用GNU的自由软件将核心程序代码与386紧紧的结合在一起，最终写出他所需要的核心程序。 而这个小玩意竟然真的可以在386上面顺利的跑起来～还可以读取Minix的文件系统。 真是太好了！不过还不够，他希望这个程序可以获得大家的一些修改建议， 于是他便将这个核心放置在网络上提供大家下载，同时在BBS上面贴了一则消息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hello everybody out there using minix-  I&#39;m doing a (free) operation system (just a hobby,  won&#39;t be big and professional like gnu) for 386(486) AT clones.   </span><br><span class="line"></span><br><span class="line">I&#39;ve currently ported bash (1.08) and gcc (1.40),   and things seem to work. This implies that i&#39;ll get   something practical within a few months, and I&#39;d like to know   what features most people want. Any suggestions are welcome,   but I won&#39;t promise I&#39;ll implement them :-)</span><br></pre></td></tr></table></figure>
+
+<p>他说，他完成了一个小小的操作系统，这个核心是用在386机器上的， 同时，他真的仅是好玩，并不是想要做一个跟GNU一样大的计划！ 另外，他希望能够得到更多人的建议与回馈来发展这个操作系统！这个概念跟Minix刚好背道而驰呢！ 这则新闻引起很多人的注意，他们也去托瓦兹提供的网站上下载了这个核心来安装。 有趣的是，因为托瓦兹放置核心的那个FTP网站的目录为：Linux， 从此，大家便称这个核心为Linux了。(请注意，此时的Linux就是那个kernel喔！ 另外，托瓦兹所丢到该目录下的第一个核心版本为0.02呢！)</p>
+<p>同时，为了让自己的Linux能够兼容于Unix系统，于是托瓦兹开始将一些能够在Unix上面运作的软件拿来在Linux上面跑。 不过，他发现到有很多的软件无法在Linux这个核心上运作。这个时候他有两种作法， 一种是修改软件，让该软件可以在Linux上跑， 另一种则是修改Linux，让Linux符合软件能够运作的规范！ 由于Linux希望能够兼容于Unix，于是托瓦兹选择了第二个作法『修改Linux』！ 为了让所有的软件都可以在Linux上执行，于是托瓦兹开始参考标准的<a href="http://en.wikipedia.org/wiki/POSIX" target="_blank" rel="noopener">POSIX</a>规范。【也就是说，因为有 Posix的存在，才有了Linux发展的可能，而 Posix是IEEE指定的一个规范，老外是很看重标准化的！ 】</p>
+<blockquote>
+<p>POSIX是可携式操作系统接口(Portable Operating System Interface)的缩写，重点在规范核心与应用程序之间的接口， 这是由美国电器与电子工程师学会(IEEE)所发布的一项标准喔！</p>
+</blockquote>
+<p>这个正确的决定让Linux在起步的时候体质就比别人优良～因为POSIX标准主要是针对Unix与一些软件运行时候的标准规范， 只要依据这些标准规范来设计的核心与软件，理论上，就可以搭配在一起执行了。 而Linux的发展就是依据这个POSIX的标准规范，Unix上面的软件也是遵循这个规范来设计的， 如此一来，让Linux很容易就与Unix兼容共享互有的软件了！同时，因为Linux直接放置在网络下，提供大家下载， 所以在流通的速度上相当的快！导致Linux的使用率大增！这些都是造成Linux大受欢迎的几个重要因素呢！</p>
+<p><strong>Linux 的发展：虚拟团队的产生</strong></p>
+<p>Linux能够成功除了托瓦兹个人的理念与力量之外，其实还有个最重要的团队！</p>
+<hr>
+<ul>
+<li><strong>单一个人维护阶段</strong></li>
+</ul>
+<p>Linux虽然是托瓦兹发明的，而且内容还绝不会涉及专利软件的版权问题。 不过，如果单靠托瓦兹自己一个人的话，那么Linux要茁壮实在很困难～ 因为一个人的力量是很有限的。好在托瓦兹选择Linux的开发方式相当的务实！ 首先，他将释出的Linux核心放置在FTP上面，并请告知大家新的版本信息， 等到使用者下载了这个核心并且安装之后，如果发生问题， 或者是由于特殊需求亟需某些硬件的驱动程序，那么这些使用者就会主动回报给托瓦兹。 在托瓦兹能够解决的问题范围内，他都能很快速的进行Linux核心的更新与除错。</p>
+<hr>
+<ul>
+<li><strong>广大黑客志工加入阶段</strong></li>
+</ul>
+<p>不过，托瓦兹总是有些硬件无法取得的啊，那么他当然无法帮助进行驱动程序的撰写与相关软件的改良。 这个时候，就会有些志工跳出来说：『这个硬件我有，我来帮忙写相关的驱动程序。』 因为Linux的核心是Open Source的，黑客志工们很容易就能够跟随Linux的原本设计架构， 并且写出兼容的驱动程序或者软件。志工们写完的驱动程序与软件托瓦兹是如何看待的呢？ 首先，他将该驱动程序/软件带入核心中，并且加以测试。 只要测试可以运行，并且没有什么主要的大问题，那么他就会很乐意的将志工们写的程序代码加入核心中！</p>
+<p>总之，托瓦兹是个很务实的人，对于Linux核心所欠缺的项目，他总是『先求有且能跑， 再求进一步改良』的心态！这让Linux使用者与志工得到相当大的鼓励！ 因为Linux的进步太快了！用户要求虚拟内存，结果不到一个星期推出的新版Linux就有了！ 这不得不让人佩服啊！</p>
+<p>另外，为因应这种随时都有程序代码加入的状况，于是Linux便逐渐发展成具有模块的功能！ 亦即是将某些功能独立出于核心外，在需要的时候才加载到核心中。如此一来， 如果有新的硬件驱动程序或者其他协议的程序代码进来时，就可以模块化， 大大的增加了Linux核心的可维护能力！</p>
+<blockquote>
+<p><strong><em>\</em>Tips:**</strong> <strong>核心是一组程序，如果这组程序每次加入新的功能都得要重新编译与改版的话会变成如何？ 想象一下，如果你只是换了显示适配器就得要重新安装新的Windows操作系统，会不会傻眼？ 模块化之后，原本的核心程序不需要更动，你可以直接将他想成是『驱动程序』即可！ ^_^</strong></p>
+</blockquote>
+<hr>
+<ul>
+<li><strong>核心功能细部分工发展阶段</strong></li>
+</ul>
+<p>后来，因为Linux核心加入了太多的功能，光靠托瓦兹一个人进行核心的实际测试并加入核心原始程序实在太费力～ 结果，就有很多的朋友跳出来帮忙这个前置作业！例如考克斯(Alan Cox)、与崔迪(Stephen Tweedie)等等， 这些重要的副手会先将来自志工们的修补程序或者新功能的程序代码进行测试， 并且结果上传给托瓦兹看，让托瓦兹作最后核心加入的原始码的选择与整并！ 这个分层负责的结果，让Linux的发展更加的容易！</p>
+<p>特别值得注意的是，这些托瓦兹的Linux发展副手，以及自愿传送修补程序的黑客志工， 其实都没有见过面，而且彼此在地球的各个角落，大家群策群力的共同发展出现今的Linux， 我们称这群人为虚拟团队！而为了虚拟团队数据的传输，于是Linux便成立的核心网站： <a href="http://www.kernel.org/" target="_blank" rel="noopener">http://www.kernel.org</a>！</p>
+<p>而这群素未谋面的虚拟团队们，在1994年终于完成的Linux的核心正式版！version 1.0。 这一版同时还加入了X Window System的支持呢！更于1996年完成了2.0版。此外，托瓦兹指明了企鹅为Linux的吉祥物。</p>
+<blockquote>
+<p><strong>Tips:</strong> 奇怪的是，托瓦兹是因为小时候去动物园被企鹅咬了一口念念不忘， 而正式的2.0推出时，大家要他想一个吉祥物。他在想也想不到什么动物的情况下， 就将这个念念不忘的企鹅当成了Linux的吉祥物了……</p>
+</blockquote>
+<p>Linux由于托瓦兹是针对386写的，跟386硬件的相关性很强，所以， 早期的Linux确实是不具有移植性的。不过，大家知道Open source的好处就是， 可以修改程序代码去适合作业的环境。因此，在1994年以后，Linux便被开发到很多的硬件上面去了！ 目前除了x86之外，IBM、HP、Sun等等公司出的硬件也都有被Linux所支持呢！</p>
+<h1 id="话外：BSD的故事"><a href="#话外：BSD的故事" class="headerlink" title="话外：BSD的故事"></a>话外：BSD的故事</h1><h2 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h2><p><img src="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/Unix_history-simple.png" alt=""></p>
+<p style="text-align:center;">Unix谱系</p>
+
+<h3 id="PDP-11开始"><a href="#PDP-11开始" class="headerlink" title="PDP-11开始"></a>PDP-11开始</h3><p>最初的Unix套件源自1970年代的<a href="https://zh.wikipedia.org/wiki/貝爾實驗室" target="_blank" rel="noopener">贝尔实验室</a>，作业系统中包含<a href="https://zh.wikipedia.org/wiki/源碼" target="_blank" rel="noopener">原始码</a>，这样研究人员以及大学都可以参与修改扩充。1974年，第一个柏克莱<a href="https://zh.wikipedia.org/wiki/BSD#cite_note-Berkeley-1" target="_blank" rel="noopener">[注 1]</a>的Unix系统被安装在<a href="https://zh.wikipedia.org/wiki/PDP-11" target="_blank" rel="noopener">PDP-11</a>机器上，<a href="https://zh.wikipedia.org/wiki/計算機科學" target="_blank" rel="noopener">计算机科学</a>系而后将其用作扩展研究。</p>
+<p>其他大学开始对柏克莱的软件感兴趣，在1977年，柏克莱的研究生比尔·乔伊将程式整理到磁带上，作为First Berkeley Software Distribution（<strong>1BSD</strong>）发行。 1BSD被作为第六版Unix系列，而不是单独的作业系统。主要程式包括<a href="https://zh.wikipedia.org/wiki/Pascal" target="_blank" rel="noopener">Pascal</a><a href="https://zh.wikipedia.org/wiki/編譯器" target="_blank" rel="noopener">编译器</a>，以及比尔·乔伊的<a href="https://zh.wikipedia.org/wiki/Ex_(文本编辑器)" target="_blank" rel="noopener">ex</a><a href="https://zh.wikipedia.org/wiki/行編輯器" target="_blank" rel="noopener">行编辑器</a>。</p>
+<p>Second Berkeley Software Distribution（<strong>2BSD</strong>）于1978年发布，除了对1BSD中的软件进行升级，还包括了比尔·乔伊写的两个新程式：<a href="https://zh.wikipedia.org/wiki/Vi" target="_blank" rel="noopener">vi</a>文字编辑器（<a href="https://zh.wikipedia.org/wiki/Ex_(文本编辑器)" target="_blank" rel="noopener">ex</a>的<a href="https://zh.wikipedia.org/wiki/可视编辑器" target="_blank" rel="noopener">可视</a>版本），以及<a href="https://zh.wikipedia.org/wiki/C_Shell" target="_blank" rel="noopener">C Shell</a>。这两个新添的程式，在Unix系统中至今仍被使用。</p>
+<p>2BSD以后的版本逐渐从<a href="https://zh.wikipedia.org/wiki/PDP-11" target="_blank" rel="noopener">PDP-11</a>结构向<a href="https://zh.wikipedia.org/wiki/VAX" target="_blank" rel="noopener">VAX</a>计算机移植。最新的<strong>2.11BSD</strong>于1992年发布，更新维护一直持续到2003年。</p>
+<h3 id="VAX版本"><a href="#VAX版本" class="headerlink" title="VAX版本"></a>VAX版本</h3><p>1978年，柏克莱安装了第一台VAX计算机，但将Unix移植到VAX构架的<a href="https://zh.wikipedia.org/w/index.php?title=UNIX/32V&action=edit&redlink=1" target="_blank" rel="noopener">UNIX/32V</a>，并没有利用VAX<a href="https://zh.wikipedia.org/wiki/虛擬內存" target="_blank" rel="noopener">虚拟记忆体</a>的能力。柏克莱的学生重写了32V的大部分<a href="https://zh.wikipedia.org/wiki/内核" target="_blank" rel="noopener">核心</a>，以实现虚拟记忆体的支援。1979年，<strong>3BSD</strong>诞生了，这个新系统完整包括了一个新核心、从2BSD移植到VAX的工具，还有32V原来的工具。</p>
+<p>3BSD的成功使得美国<a href="https://zh.wikipedia.org/wiki/國防高等研究計劃署" target="_blank" rel="noopener">国防高等研究计划署</a>（DARPA）决定资助柏克莱的<a href="https://zh.wikipedia.org/wiki/计算机系统研究小组" target="_blank" rel="noopener">电脑系统研究小组</a>（CSRG），以开发一个Unix标准平台，供DARPA未来研究。1980年10月，该小组发布了<strong>4BSD</strong>，此版本对3BSD有许多改进。</p>
+<p>相较于VAX机器的主流系统<a href="https://zh.wikipedia.org/wiki/VMS" target="_blank" rel="noopener">VMS</a>，用户对BSD时有批评。1981年6月，<strong>4.1BSD</strong>发布，比尔·乔伊大幅度提高了该版本核心的效能，使之在多个平台上与VMS相媲美。为了避免与<a href="https://zh.wikipedia.org/wiki/AT%26T" target="_blank" rel="noopener">AT&amp;T</a>的<a href="https://zh.wikipedia.org/wiki/UNIX_System_V" target="_blank" rel="noopener">UNIX System V</a>（UNIX第五版）混淆，这个版本没有取名为5BSD。</p>
+<p><strong>4.2BSD</strong>历经两年后才得以问世，实现了多项重大改进。之前有三个中间版本相继推出：4.1a引入了<a href="https://zh.wikipedia.org/wiki/BBN科技" target="_blank" rel="noopener">BBN科技</a>预试中的<a href="https://zh.wikipedia.org/wiki/TCP/IP" target="_blank" rel="noopener">TCP/IP</a>协定栈的修改版；4.1b引入了由<a href="https://zh.wikipedia.org/w/index.php?title=馬紹爾·克爾克·麥庫錫克&action=edit&redlink=1" target="_blank" rel="noopener">马绍尔·克尔克·麦库锡克</a>实现的新型档案系统（<a href="https://zh.wikipedia.org/wiki/Berkeley_Fast_File_System" target="_blank" rel="noopener">Berkeley Fast File System</a>，FFS）；4.1c是4.2BSD开发最后几个月的过渡版。</p>
+<p>1983年8月，<strong>4.2BSD</strong>正式发布。这是1982年比尔·乔伊离开小组、前去建立<a href="https://zh.wikipedia.org/wiki/昇陽" target="_blank" rel="noopener">Sun公司</a>后的第一个版本，自那时起马绍尔·克尔克·麦库锡克和<a href="https://zh.wikipedia.org/w/index.php?title=Mike_Karels&action=edit&redlink=1" target="_blank" rel="noopener">Mike Karels</a>和一直负责领导该项目。值得一提的是，这次<a href="https://zh.wikipedia.org/wiki/BSD小惡魔" target="_blank" rel="noopener">BSD小恶魔</a>正式出场，最初是马绍尔·克尔克·麦库锡克的画作，出现在列印好的文件封面上，由<a href="https://zh.wikipedia.org/wiki/USENIX" target="_blank" rel="noopener">USENIX</a>发行。</p>
+<h3 id="BSD版本"><a href="#BSD版本" class="headerlink" title="BSD版本"></a>BSD版本</h3><p>1986年6月，<strong>4.3BSD</strong>发布。该版本主要是将4.2BSD的许多新贡献作效能上的提高，原来的4.1BSD没有很好地协调。在该版本之前，BSD的TCP/IP实现已经跟BBN的官方实现有较大差异。经过数月测试后，DARPA认为4.2BSD更合适，所以在4.3BSD中作了保留。 （参见<a href="https://zh.wikipedia.org/wiki/互联网历史" target="_blank" rel="noopener">网际网路历史</a>）</p>
+<p>4.3BSD后，BSD逐渐抛开老式的VAX平台。 Computer Consoles有限公司开发的<a href="https://zh.wikipedia.org/w/index.php?title=Power_6/32&action=edit&redlink=1" target="_blank" rel="noopener">Power 6/32</a>平台（代号为”Tahoe”），当时看来大有可为，但不久即被他们的开发员所遗弃。然后，1988年6月移植的<strong>4.3BSD-Tahoe</strong>却表现不俗，BSD将依赖于机器跟不依赖于机器的代码分离，为未来系统的可移植性打下了良好的基础。</p>
+<p>到此为止，所有的BSD版本都混合了专属的AT&amp;T UNIX代码，这样继续使用就需要从<a href="https://zh.wikipedia.org/wiki/AT%26T" target="_blank" rel="noopener">AT&amp;T</a>获得授权条款。原始码授权条款当时非常地昂贵，几个其他组织对单独的网路代码版感兴趣，完全独立于AT&amp;T，这样就可不受授权条款的支配。 1989年6月，<strong>Networking Release 1</strong>（<strong>Net/1</strong>）诞生了，没有AT&amp;T授权也能使用，可遵照<a href="https://zh.wikipedia.org/wiki/BSD許可證" target="_blank" rel="noopener">BSD授权条款</a>进行<a href="https://zh.wikipedia.org/wiki/自由軟件" target="_blank" rel="noopener">自由再发布</a>。</p>
+<p>1990年初，推出了<strong>4.3BSD-Reno</strong>。该版本是4.4BSD早期开发的过渡版，使用该版本被戏称为是一种赌博，因为Reno就是<a href="https://zh.wikipedia.org/wiki/內華達州" target="_blank" rel="noopener">内华达州</a>的赌城<a href="https://zh.wikipedia.org/wiki/雷諾" target="_blank" rel="noopener">雷诺</a>。</p>
+<h3 id="Net-2以及法律问题"><a href="#Net-2以及法律问题" class="headerlink" title="Net/2以及法律问题"></a>Net/2以及法律问题</h3><p>Net/1以后，<a href="https://zh.wikipedia.org/w/index.php?title=Keith_Bostic&action=edit&redlink=1" target="_blank" rel="noopener">Keith Bostic</a>提议，BSD系统中应该有更多的非AT&amp;T部分，以Net/1的协定发布。随后，他开始一个项目，着手重新实现一些Unix标准工具，其中不使用原来的AT&amp;T代码。例如，<a href="https://zh.wikipedia.org/wiki/Vi" target="_blank" rel="noopener">Vi</a>，也就是基于最初Unix上<a href="https://zh.wikipedia.org/wiki/Ed_(文本编辑器)" target="_blank" rel="noopener">ed</a>的编辑器，被重写为<a href="https://zh.wikipedia.org/wiki/Nvi" target="_blank" rel="noopener">nvi</a>（new vi）。 18个月后，所有AT&amp;T的工具被替换，剩下的只是存留在核心的一些AT&amp;T档案。残余档案被剔除后，1991年6月，<strong>Net/2</strong>诞生了，这是一个全新的作业系统，并且可以自由发布。</p>
+<p>Net/2成为<a href="https://zh.wikipedia.org/wiki/Intel_80386" target="_blank" rel="noopener">Intel 80386</a>构架上两种移植版的主要组成部分，包括由<a href="https://zh.wikipedia.org/w/index.php?title=William_Jolitz&action=edit&redlink=1" target="_blank" rel="noopener">William Jolitz</a>负责，自由的<a href="https://zh.wikipedia.org/w/index.php?title=386BSD&action=edit&redlink=1" target="_blank" rel="noopener">386BSD</a>；以及<a href="https://zh.wikipedia.org/wiki/专属软件" target="_blank" rel="noopener">专属的</a><a href="https://zh.wikipedia.org/w/index.php?title=BSD/OS&action=edit&redlink=1" target="_blank" rel="noopener">BSD/OS</a>，由<a href="https://zh.wikipedia.org/w/index.php?title=Berkeley_Software_Design&action=edit&redlink=1" target="_blank" rel="noopener">Berkeley Software Design</a>（BSDi）负责。386BSD本身虽然短命，但在不久之后成为了<a href="https://zh.wikipedia.org/wiki/NetBSD" target="_blank" rel="noopener">NetBSD</a>和<a href="https://zh.wikipedia.org/wiki/FreeBSD" target="_blank" rel="noopener">FreeBSD</a>原始代码的基础。</p>
+<p>BSDi很快就与AT&amp;T的<a href="https://zh.wikipedia.org/wiki/Unix系统实验室" target="_blank" rel="noopener">Unix系统实验室</a>（Unix System Laboratories，USL）附属公司产生了法律纠纷，后者将拥有System V著作权，以及Unix商标。 1992年，USL正式对BSDi提起诉讼，这导致Net/2发布被中止，直到其原始码能够被鉴定为符合USL的著作权。</p>
+<p>由于最后判决悬而未决，<strong>这桩法律诉讼将BSD后裔，特别是<a href="https://zh.wikipedia.org/wiki/自由軟件" target="_blank" rel="noopener">自由软件</a>后裔的开发，延迟了两年，这导致没有法律问题的<a href="https://zh.wikipedia.org/wiki/Linux內核" target="_blank" rel="noopener">Linux核心</a>获得了极大的支援</strong>。Linux跟386BSD的开发几乎同时起步，其作者<a href="https://zh.wikipedia.org/wiki/林納斯·托瓦茲" target="_blank" rel="noopener">林纳斯·托瓦兹</a>曾说，当时如果有基于<a href="https://zh.wikipedia.org/wiki/80386" target="_blank" rel="noopener">80386</a>平台的自由<a href="https://zh.wikipedia.org/wiki/类Unix" target="_blank" rel="noopener">类Unix</a>作业系统，他就可能不会创造Linux。尽管无法预料这给以后的软件业究竟造成了什么样的影响，但有一点可以肯定，Linux更加丰富了这块土壤。</p>
+<h3 id="4-4BSD及其后裔"><a href="#4-4BSD及其后裔" class="headerlink" title="4.4BSD及其后裔"></a>4.4BSD及其后裔</h3><p>这桩诉讼在1994年1月了结，更多地满足了柏克莱的利益。柏克莱套件的18,000个档案中，只有3个档案被要求删除，另有70个档案被要求修改，并显示USL的著作权说明。这项调解另外要求，USL不得对下面的4.4BSD提起诉讼，不管是用户还是柏克莱代码的分发者。</p>
+<p>1994年6月，<strong>4.4BSD</strong>以两种形式发布：可自由再发布的<strong>4.4BSD-Lite</strong>，不包含AT&amp;T原始码；另有<strong>4.4BSD-Encumbered</strong>，跟以前的版本一样，遵照AT&amp;T的授权条款。</p>
+<p>柏克莱的最终版本是1995年的<strong>4.4BSD-Lite Release 2</strong>，而后<a href="https://zh.wikipedia.org/wiki/CSRG" target="_blank" rel="noopener">CSRG</a>解散，在柏克莱的BSD开发告一段落。在这之后，几种基于4.4BSD的套件（比如<a href="https://zh.wikipedia.org/wiki/FreeBSD" target="_blank" rel="noopener">FreeBSD</a>、<a href="https://zh.wikipedia.org/wiki/OpenBSD" target="_blank" rel="noopener">OpenBSD</a>和<a href="https://zh.wikipedia.org/wiki/NetBSD" target="_blank" rel="noopener">NetBSD</a>）得以继续维护。</p>
+<p>另外，由于<a href="https://zh.wikipedia.org/wiki/BSD許可證" target="_blank" rel="noopener">BSD授权条款</a>的宽容，许多其他的作业系统，不管是自由还是专属，都采用了BSD的代码。例如，<a href="https://zh.wikipedia.org/wiki/Microsoft_Windows" target="_blank" rel="noopener">Microsoft Windows</a>在<a href="https://zh.wikipedia.org/wiki/TCP/IP" target="_blank" rel="noopener">TCP/IP</a>的实现上引入了BSD代码；经过重新编译，在当前Windows版本中，还采用了许多BSD命令行下的网路工具。 </p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[1]BSD 中文 wiki</p>
+<p><a href="https://zh.wikipedia.org/wiki/BSD" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/BSD</a></p>
+<p>[2]鸟哥的私房菜-Linux的发展</p>
+<p><a href="http://linux.vbird.org/linux_basic/0110whatislinux.php#torvalds" target="_blank" rel="noopener">http://linux.vbird.org/linux_basic/0110whatislinux.php#torvalds</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>Author：<a href="https://notfresh.github.io">张三思</a>
+            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/">https://notfresh.github.io/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/</a> -->
+            <p>发表日期：<a href="https://notfresh.github.io/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/">May 6th 2020, 12:00:00 am</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/">May 6th 2020, 12:20:52 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/05/05/%5B%E4%BA%BA%E7%89%A9%5DDoug%20Cutting/" title= "整理#Hadoop之父Doug Cutting">
+                    <div class="prevTitle">整理#Hadoop之父Doug Cutting</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <div id="comment"></div>
+    <script>
+    new Valine({
+        el: '#comment' ,
+        notify:false, 
+        verify:false, 
+        appId: "p8rskNDpugkOJgrUg6gyCeue-gzGzoHsz",
+        appKey: "tRshEJ6QPFCgboyqVTeORgJ7",
+        placeholder: "请提出有意义和善意的评论，谢绝灌水和恶意",
+        path:window.location.pathname, 
+        avatar:'mm' 
+    });
+    </script>
+
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:notfresh@foxmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/notfresh" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+
+
+
+    <!-- 不蒜子  -->
+    <!-- 
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+        
+    </div>
+    
+     -->
+
+
+
+
+
+    
+
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:30vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序"><span class="toc-number">1.</span> <span class="toc-text">序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux的诞生前"><span class="toc-number">2.</span> <span class="toc-text">Linux的诞生前</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1969-年以前：一个没有完成的梦想：-Bell-MIT-与-GE-的『-Multics』系统"><span class="toc-number">2.1.</span> <span class="toc-text">1969 年以前：一个没有完成的梦想： Bell, MIT 与 GE 的『 Multics』系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1969-年：-Ken-Thompson-的小型-file-server-system"><span class="toc-number">2.2.</span> <span class="toc-text">1969 年： Ken Thompson 的小型 file server system</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1973-年：-Unix-的正式诞生，Ritchie-等人以-C-语言写出第一个正式-Unix-核心"><span class="toc-number">2.3.</span> <span class="toc-text">1973 年： Unix 的正式诞生，Ritchie 等人以 C 语言写出第一个正式 Unix 核心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1977-年：-重要的-Unix-分支：-BSD-的诞生"><span class="toc-number">2.3.1.</span> <span class="toc-text">1977 年： 重要的 Unix 分支： BSD 的诞生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1979-年：-一个措手不及的版权宣告！"><span class="toc-number">2.4.</span> <span class="toc-text">1979 年： 一个措手不及的版权宣告！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1984-年之一：-x86-架构的-Minix-诞生"><span class="toc-number">2.5.</span> <span class="toc-text">1984 年之一： x86 架构的 Minix 诞生</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1984-年之二：-GNU-与-FSF-计划的成立"><span class="toc-number">2.6.</span> <span class="toc-text">1984 年之二： GNU 与 FSF 计划的成立</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1991-年：-芬兰大学生-Linus-Torvalds-的一则简讯"><span class="toc-number">2.7.</span> <span class="toc-text">1991 年： 芬兰大学生 Linus Torvalds 的一则简讯</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关于-GNU-计划"><span class="toc-number">3.</span> <span class="toc-text">关于 GNU 计划</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux的诞生与繁荣"><span class="toc-number">4.</span> <span class="toc-text">Linux的诞生与繁荣</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#话外：BSD的故事"><span class="toc-number">5.</span> <span class="toc-text">话外：BSD的故事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#历史"><span class="toc-number">5.1.</span> <span class="toc-text">历史</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PDP-11开始"><span class="toc-number">5.1.1.</span> <span class="toc-text">PDP-11开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VAX版本"><span class="toc-number">5.1.2.</span> <span class="toc-text">VAX版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BSD版本"><span class="toc-number">5.1.3.</span> <span class="toc-text">BSD版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Net-2以及法律问题"><span class="toc-number">5.1.4.</span> <span class="toc-text">Net&#x2F;2以及法律问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4BSD及其后裔"><span class="toc-number">5.1.5.</span> <span class="toc-text">4.4BSD及其后裔</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 40
+        </div>
+        <!-- search  -->
+        
+            <div class="site-search popup-trigger">
+                <span class="iconfont-archer search-icon">&#xe627;</span>
+            </div>
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2020/05/06/%E5%BC%80%E6%BA%90%E7%9A%84%E8%B5%B7%E6%BA%90:GNU%E4%B8%8ELinux/" >整理#开源的起源:GNU与Linux</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2020/05/05/%5B%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%5D%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F/" >[系统设计]如何设计一个秒杀系统</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2020/05/05/%5B%E5%86%99%E4%BD%9C%E7%88%B1%E5%A5%BD%E8%80%85%5DTypora%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BA%8A/" >在 Typora 中使用图床</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2020/05/05/%5B%E4%BA%BA%E7%89%A9%5DDoug%20Cutting/" >整理#Hadoop之父Doug Cutting</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2020/05/01/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%8E%86%E5%8F%B2/" >Go语言的历史</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2020/04/26/%5B%E6%BC%AB%E8%B0%88%5D%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7/" >兴趣爱好非常重要</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E5%86%99%E4%BD%9C-%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8A%9D%E6%88%91%E8%87%AA%E5%B7%B1%E5%86%99%E4%BD%9C/" >写作的原因</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/09</span><a class="archive-post-title" href= "/2020/01/09/%E9%9A%8F%E7%AC%94-%E6%88%91%E7%9A%84%E8%A7%A3%E8%AF%BB---%E5%BC%A0%E4%B8%80%E9%B8%A3%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/" >一篇张一鸣文章的解读</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-vim%E7%9A%84%E4%BD%BF%E7%94%A8/" >Vim的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-MacOS%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C/" >MacOS使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E6%A0%88%E5%9C%A8%E6%B1%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8-%E4%B8%AD%E7%BC%80%E5%BC%8F%E8%BD%AC%E5%90%8E%E7%BC%80%E5%BC%8F-python%E5%AE%9E%E7%8E%B0/" >利用栈实现中缀式转后缀式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%AE%97%E6%B3%95-%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95%E8%BF%B7%E6%83%91%E8%BE%A8%E6%9E%90/" >置换算法辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-docker/" >docker使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB-%E5%8D%9A%E4%B8%BB%E6%8E%A8%E8%8D%90/" >博主推荐</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%9A%8F%E7%AC%94-%E6%A1%86%E6%9E%B6%E7%9A%84%E5%85%A5%E4%BE%B5%E6%80%A7%E8%A7%A3%E9%87%8A/" >框架的入侵性解释</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E5%86%99%E4%BD%9C-markdown%E7%9A%84%E7%94%A8%E6%B3%95/" >Markdown 的用法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E7%BB%8F%E7%90%86%E5%92%8C%E4%BA%A7%E5%93%81%E7%BB%8F%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/" >项目经理和产品经理的区别</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/Linux-the-art-of-command-line%20%E8%A7%A3%E8%AF%BB/" >命令行使用技巧-the art of command line</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-vagrant/" >vagrant使用技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E9%9A%8F%E7%AC%94-%E5%BF%83%E7%90%86%E8%87%AA%E6%95%91%E6%8C%87%E5%8D%97/" >心理危机自救指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E5%A5%BD%E7%8E%A9-%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91API%20python3%20demo/" >百度 API python3 Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/07</span><a class="archive-post-title" href= "/2020/01/07/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-pytest%E7%9A%84%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" >测试框架Pytest的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E6%88%91%E7%9A%84linux%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF/" >我的Linux学习之路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/Linux-%E7%88%AC%E5%9D%91%E6%8A%80%E5%B7%A7/" >Linux常技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/%E9%9A%8F%E7%AC%94-%E5%AE%9E%E9%AA%8C%E6%A5%BC%E6%8A%A5%E7%8F%AD%E5%AD%A6%E4%B9%A0%E6%84%9F%E8%A7%A6/" >实验楼报班学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%20%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E6%9C%89%E7%8E%AF%20%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%20%E7%8E%AF%E7%9A%84%E9%95%BF%E5%BA%A6/" >一个链表中环的检测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F%E7%9A%84%E5%AD%90%E9%97%AE%E9%A2%98,%20%E5%A6%82%E4%BD%95%E6%89%BE%E5%87%BA%E4%B8%80%E4%B8%AA%E6%9F%90%E4%B8%AA%E5%80%BC%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE/" >快速排序子问题-单次排序定位元素</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E9%9A%8F%E7%AC%94-%E6%B1%82%E8%81%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%8D%E6%80%9D%E5%92%8C%E6%80%9D%E8%B7%AF/" >求职的一些反思和思路</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/05</span><a class="archive-post-title" href= "/2020/01/05/%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%B7%A6%E8%BF%9E%E6%8E%A5,%E5%8F%B3%E8%BF%9E%E6%8E%A5,%E5%86%85%E8%BF%9E%E6%8E%A5,%E5%A4%96%E8%BF%9E%E6%8E%A5,%20join,%20left%20join,%20right%20join%20,mysql%20,oracle/" >左连接,右连接,内外连接的辨析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href= "/2020/01/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-Python%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83%E4%B9%8B%E7%A9%BA%E6%A0%BC/" >Python编程规范之空格的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-mysql%E5%90%AF%E5%8A%A8%E5%A4%B1%E8%B4%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" >mysql启动失败的一个解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%88%AC%E8%99%AB-scrapy/" >scrapy 入门学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-%E6%8A%8A%E5%8C%85%E4%BB%8E%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8C%E6%AD%A5%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93/" >PLSQL中的package迁移脚本</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%89%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B6/" >SQLAlchemy教程-第三章-ORM进阶</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E5%9B%9B%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95%E8%BF%9B%E9%98%B62/" >SQLAlchemy教程-第四章-ORM进阶2</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B/" >SQLAlchemy教程-第一章-基础模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80-%E6%88%91%E6%98%AF%E6%80%8E%E4%B9%88%E5%BC%80%E5%A7%8B%E5%AD%A6%E4%B9%A0Python%E7%9A%84/" >我的Python学习经历</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%94%E7%AB%A0-%E5%85%B6%E4%BB%96-%E5%AE%8C%E7%BB%93/" >SQLAlchemy教程-第五章-完结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E7%BC%96%E7%A8%8B%E5%B7%A5%E5%85%B7-git%20%E5%B0%8F%E6%A1%88%E4%BE%8B/" >Git 小案例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2020/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93-SQLAlchemy%E6%95%99%E7%A8%8B-%E7%AC%AC%E4%BA%8C%E7%AB%A0-SQL%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E7%9A%84ORM%E5%86%99%E6%B3%95/" >SQLAlchemy教程-第二章-ORM入门</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="写作爱好者"><span class="iconfont-archer">&#xe606;</span>写作爱好者</span>
+    
+        <span class="sidebar-tag-name" data-tags="漫谈"><span class="iconfont-archer">&#xe606;</span>漫谈</span>
+    
+        <span class="sidebar-tag-name" data-tags="写作"><span class="iconfont-archer">&#xe606;</span>写作</span>
+    
+        <span class="sidebar-tag-name" data-tags="随笔"><span class="iconfont-archer">&#xe606;</span>随笔</span>
+    
+        <span class="sidebar-tag-name" data-tags="Python"><span class="iconfont-archer">&#xe606;</span>Python</span>
+    
+        <span class="sidebar-tag-name" data-tags="SQLAlachemy"><span class="iconfont-archer">&#xe606;</span>SQLAlachemy</span>
+    
+        <span class="sidebar-tag-name" data-tags="数据库"><span class="iconfont-archer">&#xe606;</span>数据库</span>
+    
+        <span class="sidebar-tag-name" data-tags="sql"><span class="iconfont-archer">&#xe606;</span>sql</span>
+    
+        <span class="sidebar-tag-name" data-tags="scrapy"><span class="iconfont-archer">&#xe606;</span>scrapy</span>
+    
+        <span class="sidebar-tag-name" data-tags="算法"><span class="iconfont-archer">&#xe606;</span>算法</span>
+    
+        <span class="sidebar-tag-name" data-tags="编程语言"><span class="iconfont-archer">&#xe606;</span>编程语言</span>
+    
+        <span class="sidebar-tag-name" data-tags="付费学习"><span class="iconfont-archer">&#xe606;</span>付费学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络日志"><span class="iconfont-archer">&#xe606;</span>网络日志</span>
+    
+        <span class="sidebar-tag-name" data-tags="程序人生"><span class="iconfont-archer">&#xe606;</span>程序人生</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="历史"><span class="iconfont-archer">&#xe60a;</span>历史</span>
+    
+        <span class="sidebar-category-name" data-categories="写作"><span class="iconfont-archer">&#xe60a;</span>写作</span>
+    
+        <span class="sidebar-category-name" data-categories="随笔-心情"><span class="iconfont-archer">&#xe60a;</span>随笔-心情</span>
+    
+        <span class="sidebar-category-name" data-categories="人物-大牛"><span class="iconfont-archer">&#xe60a;</span>人物-大牛</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "张三思"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+        <div class="site-search">
+  <div class="algolia-popup popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="iconfont-archer">&#xe609;</i>
+    </span>
+  </div>
+</div>
+        <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.8.0/dist/instantsearch.min.js" defer></script>
+        <script src="/scripts/search.js" defer></script>
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
