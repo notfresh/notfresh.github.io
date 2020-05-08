@@ -20,21 +20,23 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="张三思的个人主页 notfresh ">
-    <meta name="description" content="序刷了很久的算法，我总结一下我自己的学习思路。 算法的评价标准我在网上查到的是：  传统的  时空复杂度  健壮性  可读性（可读忽略），我觉得这点很多人   我今天自己定义一下：算法对于初学者的标准是：  可读性–我  可扩展（不断打补丁），因为总有你没有考虑到的情况   如何选择学习算法step1 注重研究自己感兴趣和实用的算法 Step2 看到陌生的算法题目的时候，要明白考察的是什么知识点？">
+    <meta name="description" content="RESTful API 设计指南作者： 阮一峰 日期： 2014年5月22日 网络应用程序，分为前端和后端两个部分。当前的发展趋势，就是前端设备层出不穷（手机、平板、桌面电脑、其他专用设备……）。 因此，必须有一种统一的机制，方便不同的前端设备与后端进行通信。这导致API构架的流行，甚至出现“API First”的设计思想。RESTful API是目前比较成熟的一套互联网应用程序的API设计理论。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="算法#我的个人算法学习经验">
-<meta property="og:url" content="https://notfresh.github.io/2020/05/06/[%E7%AE%97%E6%B3%95]%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C/index.html">
+<meta property="og:title" content="[知识]RESTful API 设计指南">
+<meta property="og:url" content="https://notfresh.github.io/2020/05/07/[%E7%9F%A5%E8%AF%86]Restful%E8%A7%84%E8%8C%83/index.html">
 <meta property="og:site_name" content="张三思的个人主页">
-<meta property="og:description" content="序刷了很久的算法，我总结一下我自己的学习思路。 算法的评价标准我在网上查到的是：  传统的  时空复杂度  健壮性  可读性（可读忽略），我觉得这点很多人   我今天自己定义一下：算法对于初学者的标准是：  可读性–我  可扩展（不断打补丁），因为总有你没有考虑到的情况   如何选择学习算法step1 注重研究自己感兴趣和实用的算法 Step2 看到陌生的算法题目的时候，要明白考察的是什么知识点？">
+<meta property="og:description" content="RESTful API 设计指南作者： 阮一峰 日期： 2014年5月22日 网络应用程序，分为前端和后端两个部分。当前的发展趋势，就是前端设备层出不穷（手机、平板、桌面电脑、其他专用设备……）。 因此，必须有一种统一的机制，方便不同的前端设备与后端进行通信。这导致API构架的流行，甚至出现“API First”的设计思想。RESTful API是目前比较成熟的一套互联网应用程序的API设计理论。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-06T09:01:38.000Z">
-<meta property="article:modified_time" content="2020-05-06T09:01:46.162Z">
+<meta property="og:image" content="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/bg2014052201.png">
+<meta property="article:published_time" content="2020-05-07T14:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-07T23:54:10.463Z">
 <meta property="article:author" content="张三思">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/bg2014052201.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>算法#我的个人算法学习经验 · 张三思的个人博客</title>
+    <title>[知识]RESTful API 设计指南 · 张三思的个人博客</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -229,7 +231,7 @@
                 <a href="/" >张三思的个人博客.</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">算法#我的个人算法学习经验</a>
+                <a href="#" class="post-name">[知识]RESTful API 设计指南</a>
             </div>
     </div>
     
@@ -259,7 +261,7 @@ height:30vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            算法#我的个人算法学习经验
+            [知识]RESTful API 设计指南
             <!-- 404 -->
             
         </h1>
@@ -278,12 +280,12 @@ height:30vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count word-count">1k</span>Reading time: <span class="post-count reading-time">3 min</span></span>
+                        <span>Word count: <span class="post-count word-count">1.9k</span>Reading time: <span class="post-count reading-time">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/05/06</span>
+                    <span class="post-intro-time">2020/05/07</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -407,74 +409,144 @@ height:30vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>刷了很久的算法，我总结一下我自己的学习思路。</p>
-<h1 id="算法的评价标准"><a href="#算法的评价标准" class="headerlink" title="算法的评价标准"></a>算法的评价标准</h1><p>我在网上查到的是：</p>
+        <h1 id="RESTful-API-设计指南"><a href="#RESTful-API-设计指南" class="headerlink" title="RESTful API 设计指南"></a>RESTful API 设计指南</h1><p>作者： <a href="http://www.ruanyifeng.com/" target="_blank" rel="noopener">阮一峰</a> 日期： <a href="http://www.ruanyifeng.com/blog/2014/05/" target="_blank" rel="noopener">2014年5月22日</a></p>
+<p>网络应用程序，分为前端和后端两个部分。当前的发展趋势，就是前端设备层出不穷（手机、平板、桌面电脑、其他专用设备……）。</p>
+<p>因此，必须有一种统一的机制，方便不同的前端设备与后端进行通信。这导致API构架的流行，甚至出现<a href="http://www.google.com.hk/search?q=API+first" target="_blank" rel="noopener">“API First”</a>的设计思想。<a href="http://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank" rel="noopener">RESTful API</a>是目前比较成熟的一套互联网应用程序的API设计理论。我以前写过一篇<a href="http://www.ruanyifeng.com/blog/2011/09/restful.html" target="_blank" rel="noopener">《理解RESTful架构》</a>，探讨如何理解这个概念。</p>
+<p>今天，我将介绍RESTful API的设计细节，探讨如何设计一套合理、好用的API。我的主要参考了两篇文章（<a href="http://codeplanet.io/principles-good-restful-api-design/" target="_blank" rel="noopener">1</a>，<a href="https://bourgeois.me/rest/" target="_blank" rel="noopener">2</a>）。</p>
+<p><img src="https://typora-1256991781.cos.ap-beijing.myqcloud.com/uPic/bg2014052201.png" alt="RESTful API"></p>
+<h2 id="一、协议"><a href="#一、协议" class="headerlink" title="一、协议"></a>一、协议</h2><p>API与用户的通信协议，总是使用<a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">HTTPs协议</a>。</p>
+<h2 id="二、域名"><a href="#二、域名" class="headerlink" title="二、域名"></a>二、域名</h2><p>应该尽量将API部署在专用域名之下。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//api.example.com</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>如果确定API很简单，不会有进一步扩展，可以考虑放在主域名下。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//example.org/api/</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="三、版本（Versioning）"><a href="#三、版本（Versioning）" class="headerlink" title="三、版本（Versioning）"></a>三、版本（Versioning）</h2><p>应该将API的版本号放入URL。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="comment">//api.example.com/v1/</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>另一种做法是，将版本号放在HTTP头信息中，但不如放入URL方便和直观。<a href="https://developer.github.com/v3/media/#request-specific-version" target="_blank" rel="noopener">Github</a>采用这种做法。</p>
+<h2 id="四、路径（Endpoint）"><a href="#四、路径（Endpoint）" class="headerlink" title="四、路径（Endpoint）"></a>四、路径（Endpoint）</h2><p>路径又称”终点”（endpoint），表示API的具体网址。</p>
+<p>在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
+<p>举例来说，有一个API提供动物园（zoo）的信息，还包括各种动物和雇员的信息，则它的路径应该设计成下面这样。</p>
+<blockquote>
 <ul>
-<li><p>传统的</p>
-</li>
-<li><p>时空复杂度</p>
-</li>
-<li><p>健壮性</p>
-</li>
-<li><p>可读性（可读忽略），我觉得这点很多人</p>
-</li>
+<li><a href="https://api.example.com/v1/zoos" target="_blank" rel="noopener">https://api.example.com/v1/zoos</a></li>
+<li><a href="https://api.example.com/v1/animals" target="_blank" rel="noopener">https://api.example.com/v1/animals</a></li>
+<li><a href="https://api.example.com/v1/employees" target="_blank" rel="noopener">https://api.example.com/v1/employees</a></li>
 </ul>
-<p>我今天自己定义一下：算法对于初学者的标准是：</p>
-<ol>
-<li><p>可读性–我</p>
-</li>
-<li><p>可扩展（不断打补丁），因为总有你没有考虑到的情况</p>
-</li>
-</ol>
-<h1 id="如何选择学习算法"><a href="#如何选择学习算法" class="headerlink" title="如何选择学习算法"></a>如何选择学习算法</h1><p>step1 注重研究自己感兴趣和实用的算法</p>
-<p>Step2 看到陌生的算法题目的时候，要明白考察的是什么知识点？有没有必要去做。</p>
-<h1 id="如何编写算法"><a href="#如何编写算法" class="headerlink" title="如何编写算法"></a>如何编写算法</h1><ol>
-<li><p>思考任何算法问题，首先，使用具体的例子进行思考，避免直接写代码实现<br>算法和代码无关，算法突出体现的是思想。<br>也就是说，先进行具体思维，再进行抽象思维。</p>
-</li>
-<li><p>首先记住自己的朴素想法，然后再用算法去实现，无论什么问题，你第一应该想到的是暴力破解.这是保障。</p>
-<p>应该像计算机那样思考，一步一步的解决，也就是说，自己的思路+计算机的执行方式的交集</p>
-<p>暴力破解是首先应该想到的，最直观的解法，在暴力的基础上，再想更好的算法。</p>
-</li>
-<li><p>记住特定数据结构的特点，寻找思路和工具结合点</p>
-</li>
-<li><p>如果要求时间复杂度O(n)和空间复杂度 O(1)，那么很有可能要破坏原有数据机构的构造</p>
-</li>
-<li><p>如果想写一个工业级的算法，应该使用大量的测试数据去测试其平均状态下的运行效率，而不是几个简单的例子。 </p>
-</li>
-<li><p>编写的算法难免有bug，这个时候，我们的算法要支持拓展，支持方便的打补丁</p>
-</li>
-<li><p>我们的算法应该在被我们深刻理解之后，方便的改造成其他问题的解法，能够举一反三。</p>
-</li>
-</ol>
-<p>1.如果一个问题过于复杂，我们先从先分解和降低难度，逐步实现解题。分解到最小子问题。然后再解决更大的问题。</p>
-<h1 id="如何读懂别人的代码"><a href="#如何读懂别人的代码" class="headerlink" title="如何读懂别人的代码"></a>如何读懂别人的代码</h1><ol>
-<li><p>先放下自己的固有思路, 不要用自己的思路去套, 去检验别人的思路，尊重别人的思路，先理解别人的思路  </p>
-</li>
-<li><p><strong>画图体会, 一图胜千言.</strong>  </p>
-</li>
-<li><p><strong>读别人的算法代码是一行一行读的，不是一个语法一个语法读的，那样没法理解了。</strong></p>
-</li>
-<li><p>写简单的几个元素测试，写3到5个demo测试一下就知道了</p>
-</li>
-</ol>
-<p>确定简单的代码和复杂的代码行，并且把简单的代码翻译成人脑理解，着重解释复杂代码</p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><ol>
-<li>递归往往比较复杂，对于某些复杂的问题来说。而递归其实往往利用栈，是一种深度遍历算法。<br>写递归算法往往需要借助抽象的思维。<br>首先想，能不能由大问题化成小问题， 先解决小问题， 然后用把大问题转化成小问题。<br>降维就是这个意思。</li>
-<li>调整一个刷leetcode的思路，并不需要把所有的题都刷完，只需要挑一些重要的经典的做一下，何必想刷完所有的题呢？<br>完全没有这个必要<br>为了刷题而刷题的想法早日断了吧<br>算法的思维最为关键，而非具体的代码。  </li>
-<li>抓住经典和高频的题目进行练习。</li>
-<li>学会使用伪代码表达自己的思路。</li>
-<li>应该用一个文件记录一下自己遇到的算法题目，经常回忆和练习，以免遗忘了，毕竟造轮子的事比较少，所以需要经常复习。</li>
-<li>我觉得应该去定期参加一些 Leetcode 周赛, Google 的 KickStart 等等，可以很好地段连自己的能力。</li>
-</ol>
+</blockquote>
+<h2 id="五、HTTP动词"><a href="#五、HTTP动词" class="headerlink" title="五、HTTP动词"></a>五、HTTP动词</h2><p>对于资源的具体操作类型，由HTTP动词表示。</p>
+<p>常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<blockquote>
+<ul>
+<li>GET（SELECT）：从服务器取出资源（一项或多项）。</li>
+<li>POST（CREATE）：在服务器新建一个资源。</li>
+<li>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</li>
+<li>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</li>
+<li>DELETE（DELETE）：从服务器删除资源。</li>
+</ul>
+</blockquote>
+<p>还有两个不常用的HTTP动词。</p>
+<blockquote>
+<ul>
+<li>HEAD：获取资源的元数据。</li>
+<li>OPTIONS：获取信息，关于资源的哪些属性是客户端可以改变的。</li>
+</ul>
+</blockquote>
+<p>下面是一些例子。</p>
+<blockquote>
+<ul>
+<li>GET /zoos：列出所有动物园</li>
+<li>POST /zoos：新建一个动物园</li>
+<li>GET /zoos/ID：获取某个指定动物园的信息</li>
+<li>PUT /zoos/ID：更新某个指定动物园的信息（提供该动物园的全部信息）</li>
+<li>PATCH /zoos/ID：更新某个指定动物园的信息（提供该动物园的部分信息）</li>
+<li>DELETE /zoos/ID：删除某个动物园</li>
+<li>GET /zoos/ID/animals：列出某个指定动物园的所有动物</li>
+<li>DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物</li>
+</ul>
+</blockquote>
+<h2 id="六、过滤信息（Filtering）"><a href="#六、过滤信息（Filtering）" class="headerlink" title="六、过滤信息（Filtering）"></a>六、过滤信息（Filtering）</h2><p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。</p>
+<p>下面是一些常见的参数。</p>
+<blockquote>
+<ul>
+<li>?limit=10：指定返回记录的数量</li>
+<li>?offset=10：指定返回记录的开始位置。</li>
+<li>?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</li>
+<li>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</li>
+<li>?animal_type_id=1：指定筛选条件</li>
+</ul>
+</blockquote>
+<p>参数的设计允许存在冗余，即允许API路径和URL参数偶尔有重复。比如，GET /zoo/ID/animals 与 GET /animals?zoo_id=ID 的含义是相同的。</p>
+<h2 id="七、状态码（Status-Codes）"><a href="#七、状态码（Status-Codes）" class="headerlink" title="七、状态码（Status Codes）"></a>七、状态码（Status Codes）</h2><p>服务器向用户返回的状态码和提示信息，常见的有以下一些（方括号中是该状态码对应的HTTP动词）。</p>
+<blockquote>
+<ul>
+<li>200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</li>
+<li>201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</li>
+<li>202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</li>
+<li>204 NO CONTENT - [DELETE]：用户删除数据成功。</li>
+<li>400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</li>
+<li>401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</li>
+<li>403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</li>
+<li>404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</li>
+<li>406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</li>
+<li>410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</li>
+<li>422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</li>
+<li>500 INTERNAL SERVER ERROR - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。</li>
+</ul>
+</blockquote>
+<p>状态码的完全列表参见<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" rel="noopener">这里</a>。</p>
+<h2 id="八、错误处理（Error-handling）"><a href="#八、错误处理（Error-handling）" class="headerlink" title="八、错误处理（Error handling）"></a>八、错误处理（Error handling）</h2><p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    error: <span class="string">"Invalid API key"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="九、返回结果"><a href="#九、返回结果" class="headerlink" title="九、返回结果"></a>九、返回结果</h2><p>针对不同操作，服务器向用户返回的结果应该符合以下规范。</p>
+<blockquote>
+<ul>
+<li>GET /collection：返回资源对象的列表（数组）</li>
+<li>GET /collection/resource：返回单个资源对象</li>
+<li>POST /collection：返回新生成的资源对象</li>
+<li>PUT /collection/resource：返回完整的资源对象</li>
+<li>PATCH /collection/resource：返回完整的资源对象</li>
+<li>DELETE /collection/resource：返回一个空文档</li>
+</ul>
+</blockquote>
+<h2 id="十、Hypermedia-API"><a href="#十、Hypermedia-API" class="headerlink" title="十、Hypermedia API"></a>十、Hypermedia API</h2><p>RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。</p>
+<p>比如，当用户向api.example.com的根目录发出请求，会得到这样一个文档。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"link"</span>: &#123;</span><br><span class="line">  <span class="string">"rel"</span>:   <span class="string">"collection https://www.example.com/zoos"</span>,</span><br><span class="line">  <span class="string">"href"</span>:  <span class="string">"https://api.example.com/zoos"</span>,</span><br><span class="line">  <span class="string">"title"</span>: <span class="string">"List of zoos"</span>,</span><br><span class="line">  <span class="string">"type"</span>:  <span class="string">"application/vnd.yourformat+json"</span></span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面代码表示，文档中有一个link属性，用户读取这个属性就知道下一步该调用什么API了。rel表示这个API与当前网址的关系（collection关系，并给出该collection的网址），href表示API的路径，title表示API的标题，type表示返回类型。</p>
+<p>Hypermedia API的设计被称为<a href="http://en.wikipedia.org/wiki/HATEOAS" target="_blank" rel="noopener">HATEOAS</a>。Github的API就是这种设计，访问<a href="https://api.github.com/" target="_blank" rel="noopener">api.github.com</a>会得到一个所有可用API的网址列表。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"current_user_url"</span>: <span class="string">"https://api.github.com/user"</span>,</span><br><span class="line">  <span class="string">"authorizations_url"</span>: <span class="string">"https://api.github.com/authorizations"</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>从上面可以看到，如果想获取当前用户的信息，应该去访问<a href="https://api.github.com/user" target="_blank" rel="noopener">api.github.com/user</a>，然后就得到了下面结果。</p>
+<blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"message"</span>: <span class="string">"Requires authentication"</span>,</span><br><span class="line">  <span class="string">"documentation_url"</span>: <span class="string">"https://developer.github.com/v3"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>上面代码表示，服务器给出了提示信息，以及文档的网址。</p>
+<h2 id="十一、其他"><a href="#十一、其他" class="headerlink" title="十一、其他"></a>十一、其他</h2><p>（1）API的身份认证应该使用<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">OAuth 2.0</a>框架。</p>
+<p>（2）服务器返回的数据格式，应该尽量使用JSON，避免使用XML。</p>
+<p>（完）</p>
+<h3 id="文档信息"><a href="#文档信息" class="headerlink" title="文档信息"></a>文档信息</h3><ul>
+<li>版权声明：自由转载-非商用-非衍生-保持署名（<a href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank" rel="noopener">创意共享3.0许可证</a>）</li>
+<li>发表日期： 2014年5月22日</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[0]原文链接</p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/05/restful_api.html</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>Author：<a href="https://notfresh.github.io">张三思</a>
-            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/05/06/[%E7%AE%97%E6%B3%95]%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C/">https://notfresh.github.io/2020/05/06/[%E7%AE%97%E6%B3%95]%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C/</a> -->
-            <p>发表日期：<a href="https://notfresh.github.io/2020/05/06/[%E7%AE%97%E6%B3%95]%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C/">May 6th 2020, 5:01:38 pm</a>
-            <p>更新日期：<a href="https://notfresh.github.io/2020/05/06/[%E7%AE%97%E6%B3%95]%E6%88%91%E7%9A%84%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%BB%8F%E9%AA%8C/">May 6th 2020, 5:01:46 pm</a>
+            <!-- <p>原文链接：<a href="https://notfresh.github.io/2020/05/07/[%E7%9F%A5%E8%AF%86]Restful%E8%A7%84%E8%8C%83/">https://notfresh.github.io/2020/05/07/[%E7%9F%A5%E8%AF%86]Restful%E8%A7%84%E8%8C%83/</a> -->
+            <p>发表日期：<a href="https://notfresh.github.io/2020/05/07/[%E7%9F%A5%E8%AF%86]Restful%E8%A7%84%E8%8C%83/">May 7th 2020, 10:00:00 pm</a>
+            <p>更新日期：<a href="https://notfresh.github.io/2020/05/07/[%E7%9F%A5%E8%AF%86]Restful%E8%A7%84%E8%8C%83/">May 8th 2020, 7:54:10 am</a>
             <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -483,16 +555,16 @@ height:30vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/05/07/%5B%E5%A4%A7%E6%95%B0%E6%8D%AE%5D%5B%E5%8E%86%E5%8F%B2%5Dhadoop%E7%9A%84%E5%8E%86%E5%8F%B2/" title= "[大数据]大数据代表Hadoop的10年回顾">
-                    <div class="nextTitle">[大数据]大数据代表Hadoop的10年回顾</div>
+                <a href= "/2020/05/08/%5B%E7%9F%A5%E8%AF%86%5DRestful%E8%BF%9B%E9%98%B6%E7%90%86%E8%A7%A3/" title= "[知识]RESTful进阶理解">
+                    <div class="nextTitle">[知识]RESTful进阶理解</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/05/06/%5B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%5D%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/" title= "读书笔记#持续更新#大型网站技术架构">
-                    <div class="prevTitle">读书笔记#持续更新#大型网站技术架构</div>
+                <a href= "/2020/05/07/%5B%E5%A4%A7%E6%95%B0%E6%8D%AE%5D%E5%A4%A7%E6%95%B0%E6%8D%AE10%E5%B9%B4/" title= "[大数据]从Hadoop到Spark、Flink，大数据处理框架十年激荡发展史">
+                    <div class="prevTitle">[大数据]从Hadoop到Spark、Flink，大数据处理框架十年激荡发展史</div>
                 </a>
             
         </li>
@@ -634,7 +706,7 @@ top:30vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#序"><span class="toc-number">1.</span> <span class="toc-text">序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#算法的评价标准"><span class="toc-number">2.</span> <span class="toc-text">算法的评价标准</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何选择学习算法"><span class="toc-number">3.</span> <span class="toc-text">如何选择学习算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何编写算法"><span class="toc-number">4.</span> <span class="toc-text">如何编写算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何读懂别人的代码"><span class="toc-number">5.</span> <span class="toc-text">如何读懂别人的代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">6.</span> <span class="toc-text">其他</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-API-设计指南"><span class="toc-number">1.</span> <span class="toc-text">RESTful API 设计指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、协议"><span class="toc-number">1.1.</span> <span class="toc-text">一、协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、域名"><span class="toc-number">1.2.</span> <span class="toc-text">二、域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、版本（Versioning）"><span class="toc-number">1.3.</span> <span class="toc-text">三、版本（Versioning）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、路径（Endpoint）"><span class="toc-number">1.4.</span> <span class="toc-text">四、路径（Endpoint）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、HTTP动词"><span class="toc-number">1.5.</span> <span class="toc-text">五、HTTP动词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、过滤信息（Filtering）"><span class="toc-number">1.6.</span> <span class="toc-text">六、过滤信息（Filtering）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、状态码（Status-Codes）"><span class="toc-number">1.7.</span> <span class="toc-text">七、状态码（Status Codes）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、错误处理（Error-handling）"><span class="toc-number">1.8.</span> <span class="toc-text">八、错误处理（Error handling）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九、返回结果"><span class="toc-number">1.9.</span> <span class="toc-text">九、返回结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十、Hypermedia-API"><span class="toc-number">1.10.</span> <span class="toc-text">十、Hypermedia API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十一、其他"><span class="toc-number">1.11.</span> <span class="toc-text">十一、其他</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文档信息"><span class="toc-number">1.11.1.</span> <span class="toc-text">文档信息</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">2.</span> <span class="toc-text">参考</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
